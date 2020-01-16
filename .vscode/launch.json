@@ -5,7 +5,7 @@
       "name": "(lldb) Launch",
       "type": "lldb",
       "request": "launch",
-      "program": "${workspaceFolder}/helloworld.out",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.out",
       "args": []
     }
   ]

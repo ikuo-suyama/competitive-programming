@@ -6,59 +6,22 @@
       "type": "shell",
       "command": "clang++",
       "args": [
-        "-std=c++17",
+        "-std=c++14",
         "-stdlib=libc++",
-        "helloworld.cpp",
+        "${file}",
         "-o",
-        "helloworld.out",
-        "--debug"
+        "${fileDirname}/${fileBasenameNoExtension}.out",
+        "-I",
+        "${workspaceFolder}",
+        "--debug",
+        ";",
+        "and",
+        "${fileDirname}/${fileBasenameNoExtension}.out"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       }
     },
-    {
-      "type": "shell",
-      "label": "clang++ build active file",
-      "command": "/usr/bin/clang++",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/bin"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "clang build active file",
-      "command": "/usr/bin/clang",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/bin"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "cpp build active file",
-      "command": "/usr/bin/cpp",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/bin"
-      }
-    }
   ]
 }
