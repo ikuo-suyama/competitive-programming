@@ -3,22 +3,24 @@ using namespace std;
 
 // x番の組織について、子組織からの報告書が揃った時刻を返す
 // childrenは組織の関係を表す2次元配列(参照渡し)
-int complete_time(vector<vector<int>> &children, int x)
+int count_documents(vector<vector<int>> &children, vector<int> &retCount, int x)
 {
-  // (ここに追記して再帰関数を実装する)
   if (children.at(x).size() == 0)
   {
-    return 0;
+    retCount.at(x) = 1;
+    return 1;
   }
   else
   {
     vector<int> c = children.at(x);
-    vector<int> ret(c.size());
+    int ret = 0;
     for (int i = 0; i < c.size(); i++)
     {
-      ret.at(i) = complete_time(children, c.at(i)) + 1;
+      ret += count_documents(children, retCount, c.at(i));
     }
-    return *std::max_element(ret.begin(), ret.end());
+    ret++;
+    retCount.at(x) = ret;
+    return ret;
   }
 }
 
@@ -47,6 +49,10 @@ int main()
     children.at(parent).push_back(i); // parentの子組織一覧にi番を追加
   }
 
-  // 0番の組織の元に報告書が揃う時刻を求める
-  cout << complete_time(children, 0) << endl;
+  vector<int> ret(N);
+  count_documents(children, ret, 0);
+  for (int i = 0; i < N; i++)
+  {
+    cout << ret.at(i) << endl;
+  }
 }
