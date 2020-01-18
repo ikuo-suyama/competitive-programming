@@ -11,36 +11,23 @@ int main()
   cin >> A >> B >> C >> X;
 
   int p = 0, x = X;
-  int a = A, b = B, c = C;
-  int sum = -1;
-  while (x == X)
+  int a, b, c = 0;
+
+  for (int i = 0; i <= A; i++)
   {
-    c = min(x / 50, c);
-    x -= 50 * c;
-    b = min(x / 100, b);
-    x -= 100 * b;
-    a = min(x / 500, a);
-    x -= 500 * a;
-
-    cout << x << endl;
-    cout << a << "," << b << "," << c << endl;
-
-    if (x == 0 && sum != a + b + c)
+    a = i * 500;
+    // if (a > X) break;
+    for (int j = 0; j <= B; j++)
     {
-      p++;
-      x = X;
-      sum = a + b + c;
-      if (c > 2)
+      b = j * 100;
+      // if (a + b > X) break;
+      for (int k = 0; k <= C; k++)
       {
-        c = c - 2;
-        b = B;
-        a = A;
-      }
-      else if (b > 5)
-      {
-        b = b - 5;
-        a = A;
-        c = C;
+        c = k * 50;
+        if (a + b + c == X)
+        {
+          p++;
+        }
       }
     }
   }
