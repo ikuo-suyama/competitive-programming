@@ -15,12 +15,12 @@ int main()
   int sum = -1;
   while (x == X)
   {
-    a = min(x / 500, a);
-    x -= 500 * a;
-    b = min(x / 100, b);
-    x -= 100 * b;
     c = min(x / 50, c);
     x -= 50 * c;
+    b = min(x / 100, b);
+    x -= 100 * b;
+    a = min(x / 500, a);
+    x -= 500 * a;
 
     cout << x << endl;
     cout << a << "," << b << "," << c << endl;
@@ -30,15 +30,16 @@ int main()
       p++;
       x = X;
       sum = a + b + c;
-      if (a != 0)
+      if (c > 2)
       {
-        a--;
+        c = c - 2;
         b = B;
-        c = C;
+        a = A;
       }
-      else if (b != 0)
+      else if (b > 5)
       {
-        b--;
+        b = b - 5;
+        a = A;
         c = C;
       }
     }
