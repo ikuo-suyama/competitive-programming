@@ -7,7 +7,7 @@ int main() {
   cin.rdbuf(in.rdbuf());
 
   // N個の変数を配列に格納
-  int a,b,c;
+  int a, b, c;
   cin >> a >> b >> c;
 
   string s;

@@ -32,9 +32,9 @@ int main() {
   std::vector<int>::iterator maxIt = std::max_element(vec.begin(), vec.end());
 
   // distance で vec の先頭イテレーターと minIt, maxIt との距離を取得する．
-  // インデックスを取得したいときは，vec の先頭イテレーターを指定する必要がある．
-  // 例えば，vec.begin() + 1 とか指定すると答えは変わる．
+  // インデックスを取得したいときは，vec
+  // の先頭イテレーターを指定する必要がある． 例えば，vec.begin() + 1
+  // とか指定すると答えは変わる．
   size_t minIndex = std::distance(vec.begin(), minIt);
   size_t maxIndex = std::distance(vec.begin(), maxIt);
-
 }
