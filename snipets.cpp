@@ -37,4 +37,11 @@ int main() {
   // とか指定すると答えは変わる．
   size_t minIndex = std::distance(vec.begin(), minIt);
   size_t maxIndex = std::distance(vec.begin(), maxIt);
+
+  // int to string & 一文字ずつ
+  int i, c;
+  string s = to_string(i);
+  for (int j = 0; j < s.size(); j++) {
+    c += (int)(s[j] - '0');
+  }
 }
