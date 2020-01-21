@@ -11,19 +11,26 @@ int main() {
   cin >> N;
 
   int cnt = 0;
-  string I, J;
-  char Istart, Iend, Jstart, Jend;
+  string A;
+  int B = 0, bs = 0, bn = 0;
+  char Astart, Aend, Bstart, Bend;
   for (size_t i = 1; i <= N; i++) {
-    I = to_string(i);
-    Istart = I[0];
-    Iend = I[I.size() - 1];
+    A = to_string(i);
+    Astart = A[0];
+    Aend = A[A.size() - 1];
 
-    for (size_t j = 1; j <= N; j++) {
-      J = to_string(j);
-      Jstart = J[0];
-      Jend = J[J.size() - 1];
-      if (Iend == Jstart && Istart == Jend) cnt++;
+    if (Astart == Aend) {
+      if (Astart + '0' < N) cnt++;
     }
+    // for (size_t j = 1; j <= log10(N) + 1; j++) {
+    //   Bstart = Aend;
+    //   Bend = Astart;
+    //   bs = (Bstart - '0') * pow(10, j) + (Bend - '0');
+    //   bn = ((Bstart - '0') + 1) * pow(10, j) + (Bend - '0');
+    //   for (size_t k = bs; k < bn; k += 10) {
+    //     if (k <= N) cnt++;
+    //   }
+    // }
   }
   cout << cnt;
 }
