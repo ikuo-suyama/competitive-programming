@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define rep(i, n) for (int i = 0; i < (n); i++)
+typedef long long ll;
 
 int main() {
   // input.txt から cin
@@ -10,8 +12,10 @@ int main() {
   int N;
   cin >> N;
 
-  vector<int> a(N);
-  for (int i = 0; i < N; i++) {
-    cin >> a.at(i);
-  }
+  int c[N];
+  rep(i, N) { cin >> c[i]; }
+
+  ll cnt = 0;
+
+  cout << cnt << endl;
 }
