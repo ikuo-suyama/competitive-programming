@@ -1,6 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+static bool endsWith(string& str, string& suffix) {
+  return str.size() >= suffix.size() &&
+         0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix);
+}
+static bool startsWith(string& str, string& prefix) {
+  return str.size() >= prefix.size() &&
+         0 == str.compare(0, prefix.size(), prefix);
+}
+
 int main() {
   // input.txt から cin
   ifstream in("input.txt");
