@@ -9,7 +9,8 @@ vector<string> c;
 vector<vector<bool>> reached;
 
 /**
- * 深さ優先探索
+ * 深さ優先探索/DFS
+ * Depth First Search
  */
 void search(int x, int y) {
   if (x >= H || y >= W || x < 0 || y < 0) return;
