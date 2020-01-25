@@ -3,6 +3,9 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 typedef long long ll;
 
+/**
+ * bit全探索
+ */
 int main() {
   ifstream in("ac-ans-a/arc061_a.txt");
   cin.rdbuf(in.rdbuf());
