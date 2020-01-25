@@ -7,18 +7,20 @@ typedef long long ll;
 int N, M;
 vector<vector<int>> g;
 
-void searchGraph(int i, set<int> fill, ll *cnt) {
+void searchGraph(int i, vector<bool>& fill, ll& cnt) {
   vector<int> path = g[i];
-  fill.insert(i);
-  if (fill.size() == N) {
-    // 回りきって最後
-    *cnt += 1;
+  bool all_visited = true;
+  rep(i, N) { all_visited &= fill[i]; }
+  if (all_visited) {
+    cnt++;
     return;
   }
   rep(i, path.size()) {
     int next = path[i];
-    if (fill.find(next) == fill.end()) {
+    if (!fill[next]) {
+      fill[next] = true;
       searchGraph(next, fill, cnt);
+      fill[next] = false;
     }
   }
 }
@@ -29,17 +31,20 @@ int main() {
 
   cin >> N >> M;
 
-  g = vector<vector<int>>(M + 1, vector<int>(0));
+  g = vector<vector<int>>(M, vector<int>(0));
   rep(i, M) {
     int a, b;
     cin >> a >> b;
+    a--;
+    b--;
     g[a].push_back(b);
     g[b].push_back(a);
   }
 
   ll cnt = 0;
-  set<int> fill;
-  searchGraph(1, fill, &cnt);
+  vector<bool> fill(N, false);
+  fill[0] = true;
+  searchGraph(0, fill, cnt);
 
   cout << cnt << endl;
 }
