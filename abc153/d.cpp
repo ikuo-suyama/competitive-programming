@@ -7,13 +7,14 @@ int main() {
   ifstream in("abc153/d.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  ll H;
+  cin >> H;
 
-  int c[N];
-  rep(i, N) { cin >> c[i]; }
+  ll n = 0;
+  do {
+    n++;
+  } while (pow(2, n) <= H);
 
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  ll ret = (1 - pow(2, n)) / (1 - 2);
+  cout << ret << endl;
 }
