@@ -7,13 +7,18 @@ int main() {
   ifstream in("abc153/c.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  int N, K;
+  cin >> N >> K;
 
-  int c[N];
-  rep(i, N) { cin >> c[i]; }
+  vector<ll> h(N);
+  rep(i, N) { cin >> h[i]; }
 
-  ll cnt = 0;
+  sort(h.begin(), h.end(), greater<int>());
 
-  cout << cnt << endl;
+  ll ret = 0;
+  if (K < N) {
+    ret = accumulate(next(h.begin(), K), h.end(), (ll)0);
+  }
+
+  cout << ret << endl;
 }
