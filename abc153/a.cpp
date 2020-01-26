@@ -7,13 +7,10 @@ int main() {
   ifstream in("abc153/a.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  int H, A;
+  cin >> H >> A;
 
-  int c[N];
-  rep(i, N) { cin >> c[i]; }
-
-  ll cnt = 0;
+  int cnt = ceil(H / (double)A);
 
   cout << cnt << endl;
 }
