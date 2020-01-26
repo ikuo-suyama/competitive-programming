@@ -7,13 +7,15 @@ int main() {
   ifstream in("abc153/b.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  int H, N;
+  cin >> H >> N;
 
-  int c[N];
+  vector<int> c(N);
   rep(i, N) { cin >> c[i]; }
 
-  ll cnt = 0;
+  ll max = accumulate(c.begin(), c.end(), 0);
 
-  cout << cnt << endl;
+  string ret = H > max ? "No" : "Yes";
+
+  cout << ret << endl;
 }
