@@ -15,32 +15,22 @@ int main() {
   int H, N;
   cin >> H >> N;
 
-  vector<P> m(N);
+  vector<int> A(N);
+  vector<int> B(N);
+  rep(i, N) { cin >> A[i] >> B[i]; }
+
+  vector<ll> dp(H + 1, INT_MAX);
+  dp[0] = 0;
+
   rep(i, N) {
-    int a, b;
-    cin >> a >> b;
-    m[i] = make_pair(a, b);
+    int a = A[i];
+    int b = B[i];
+
+    rep(h, H) {
+      int nh = min(h + a, H);
+      dp[nh] = min(dp[nh], dp[h] + b);
+    }
   }
 
-  sort(m.begin(), m.end(), cmp);
-  rep(i, N) { cout << m[i].first / (double)m[i].second << endl; }
-
-  ll ret = 0;
-  do {
-    rep(i, m.size()) {
-      P p = m[i];
-      int a = p.first;
-      int b = p.second;
-      if (a <= H) {
-        H -= a;
-        ret += b;
-        break;
-      } else if (i == m.size() - 1) {
-        H -= a;
-        ret += b;
-      }
-    }
-  } while (H > 0);
-
-  cout << ret << endl;
+  cout << dp[H] << endl;
 }
