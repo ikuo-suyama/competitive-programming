@@ -85,6 +85,7 @@
     "unordered_set": "cpp",
     "utility": "cpp",
     "valarray": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "__cxx_version": "cpp"
   }
 }

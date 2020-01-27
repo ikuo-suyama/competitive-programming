@@ -19,16 +19,19 @@ int main() {
   vector<int> B(N);
   rep(i, N) { cin >> A[i] >> B[i]; }
 
-  vector<vector<int>> dp(N + 10, vector<int>(W + 10, 0));
+  vector<vector<vector<int>>> dp(
+      N + 1, vector<vector<int>>(W + 1, vector<int>(K + 2, 0)));
   for (int i = 1; i < N; i++) {
     for (int w = 1; w <= W; w++) {
-      if (w >= A[i]) {
-        dp[i + 1][w] = max(dp[i][w - A[i]] + B[i], dp[i][w]);
-      } else {
-        dp[i + 1][w] = dp[i][w];
+      for (int k = 1; k <= K; k++) {
+        if (w >= A[i]) {
+          dp[i + 1][w][k] = max(dp[i][w - A[i]][k - 1] + B[i], dp[i][w][k - 1]);
+        } else {
+          dp[i + 1][w][k] = dp[i][w][k - 1];
+        }
       }
     }
   }
 
-  cout << dp[N][W] << endl;
+  cout << dp[N][W][K] << endl;
 }
