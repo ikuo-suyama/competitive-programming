@@ -25,9 +25,10 @@ int main() {
     for (int w = 1; w <= W; w++) {
       for (int k = 1; k <= K; k++) {
         if (w >= A[i]) {
-          dp[i + 1][w][k] = max(dp[i][w - A[i]][k - 1] + B[i], dp[i][w][k - 1]);
+          dp[i + 1][w][k] =
+              max({dp[i][w - A[i]][k] + B[i], dp[i][w][k - 1], dp[i][w][k]});
         } else {
-          dp[i + 1][w][k] = dp[i][w][k - 1];
+          dp[i + 1][w][k] = max(dp[i][w][k], dp[i][w][k - 1]);
         }
       }
     }
