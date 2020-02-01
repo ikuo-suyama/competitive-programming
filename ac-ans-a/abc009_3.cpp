@@ -14,28 +14,47 @@ int main() {
   string S;
   cin >> N >> K >> S;
 
+  // 理想の辞書順
+  string c(S);
+  sort(c.begin(), c.end(), less<char>());
+
   string ret(S);
 
   rep(i, N) {
-    string t = ret.substr(i);
+    string pre = c.substr(0, i);
+    string r = c.substr(i);
+    vector<char> rest(N - i);
+    rep(j, N - i) { rest[j] = r[j]; }
 
-    // i以上で最小の文字を見つける
-    vector<pair<int, char>> c(N - i);
-    rep(j, N - i) { c[j] = make_pair(j, t[j]); }
-    sort(c.begin(), c.end(), cmp);
+    string test = S.substr(i);
 
-    string test(ret);
-    // swap
-    char tmp = test[i];
-    test[i] = c[0].second;
-    test[c[0].first + i] = tmp;
+    rep(j, N - i) {
+      int len = rest.size();
+      rep(k, len) {
+        // 同じ文字があった
+        if(test[j] == rest[k]) {
+          rest.erase(rest.begin() + k);
+          break;
+        }
+      }
+      // 同じ文字がなかった
+      if (len == rest.size()) {
+        test[j] = rest[0];
+        rest.erase(rest.begin());
+      }
+    }
 
     int k = 0;
-    rep(j, N) {
-      if (S[j] != test[j]) k++;
+    rep(j, i) {
+      if (S[j] != pre[j]) k++;
+    }
+    for (int j = i; j < N; j++) {
+      if (S[j] != test[j - i]) k++;
     }
     if (k <= K) {
-      ret = test;
+      ret = pre + test;
+    } else {
+      break;
     }
   }
 
