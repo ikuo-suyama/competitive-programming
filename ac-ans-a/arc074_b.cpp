@@ -55,7 +55,7 @@ int main() {
   }
 
   ll sum = LLONG_MIN;
-  rep(k, N) { sum = max(sum, a_sum_k[k] - b_sum_k[k]); }
+  rep(k, N + 1) { sum = max(sum, a_sum_k[k] - b_sum_k[k]); }
 
   cout << sum << endl;
 }
