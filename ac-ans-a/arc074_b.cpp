@@ -12,9 +12,9 @@ int main() {
   int N;
   cin >> N;
 
-  priority_queue<int, vector<int>, greater<int>> a;
-  priority_queue<int> b;
-  vector<int> c(N, 0);
+  priority_queue<ll, vector<ll>, greater<ll>> a;
+  priority_queue<ll> b;
+  vector<ll> c(3 * N, 0);
   ll a_sum = 0, b_sum = 0;
 
   rep(i, 3 * N) {
@@ -24,36 +24,38 @@ int main() {
     if (i < N) {
       a.push(_c);
       a_sum += _c;
-    } else {
+    } else if (i >= 2 * N) {
       b.push(_c);
       b_sum += _c;
-      if (i >= 2 * N) {
-        int _b = b.top();
-        b.pop();
-        b_sum -= _b;
-      }
     }
   }
 
-  ll sum = 0;
-  repi(k, N, 2 * N) {
-    int _c = c[k];
+  vector<ll> a_sum_k(N + 1, 0);
+  a_sum_k[0] = a_sum;
+  for (int k = 1; k <= N; k++) {
+    ll _c = c[k + N - 1];
     a.push(_c);
-    b.push(_c);
-
     a_sum += _c;
-    b_sum += _c;
-
-    int _a = a.top();
+    ll _a = a.top();
     a_sum -= _a;
     a.pop();
+    a_sum_k[k] = a_sum;
+  }
 
-    int _b = b.top();
+  vector<ll> b_sum_k(N + 1, 0);
+  b_sum_k[N] = b_sum;
+  for (int k = N - 1; k >= 0; k--) {
+    ll _c = c[N + k];
+    b.push(_c);
+    b_sum += _c;
+    ll _b = b.top();
     b_sum -= _b;
     b.pop();
-
-    sum = max(sum, a_sum - b_sum);
+    b_sum_k[k] = b_sum;
   }
+
+  ll sum = LLONG_MIN;
+  rep(k, N) { sum = max(sum, a_sum_k[k] - b_sum_k[k]); }
 
   cout << sum << endl;
 }
