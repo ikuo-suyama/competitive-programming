@@ -19,11 +19,19 @@ int main() {
     int a, b, c;
     ll w;
     cin >> a >> b >> c >> w;
-
-    rep2(j, a, 100 + 1) rep2(k, b, 100 + 1) rep2(l, c, 100 + 1) {
-      if (dp[j][k][l] < w) dp[j][k][l] = w;
-    }
+    dp[a][b][c] = max(dp[a][b][c], w);
   }
+
+  rep(i, 101) rep(j, 101) rep(k, 101) {
+    if (i) dp[i][j][k] = max(dp[i][j][k], dp[i - 1][j][k]);
+    if (j) dp[i][j][k] = max(dp[i][j][k], dp[i][j - 1][k]);
+    if (k) dp[i][j][k] = max(dp[i][j][k], dp[i][j][k - 1]);
+  }
+  // rep2(j, 1, 100 + 1) rep2(k, 1, 100 + 1) rep2(l, 1, 100 + 1) {
+  //   dp[j][k][l] =
+  //       max({dp[j][k][l], dp[j - 1][k][l], dp[j][k - 1][l], dp[j][k][l -
+  //       1]});
+  // }
 
   rep(i, M) {
     int a, b, c;
