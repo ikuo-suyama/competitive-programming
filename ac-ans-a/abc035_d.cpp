@@ -7,8 +7,7 @@ typedef long long ll;
 
 typedef pair<ll, int> pl;
 
-void search_dijkstra(vector<ll>& fixed, vector<vector<int>>& g,
-                     map<P, int>& m) {
+void search_dijkstra(vector<ll>& fixed, vector<vector<int>>& g, map<P, ll>& m) {
   // 未確定なもののQueue; (かかる時間, 島i)
   priority_queue<pl, vector<pl>, greater<pl>> que;
 
@@ -49,10 +48,11 @@ int main() {
 
   vector<vector<int>> g(N);
   vector<vector<int>> rev_g(N);
-  map<P, int> cm, rev_cm;
+  map<P, ll> cm, rev_cm;
   // M本の有向グラフ
   rep(i, M) {
-    int a, b, c;
+    int a, b;
+    ll c;
     cin >> a >> b >> c;
     a--;
     b--;
@@ -64,12 +64,22 @@ int main() {
   }
 
   // ダイクストラ法：各辺への最短経路を求める
+  // 行きにかかる最短時間
   vector<ll> fixed(N, -1);
   search_dijkstra(fixed, g, cm);
 
+  // 帰りにかかる最短時間
   vector<ll> rev_fixed(N, -1);
   search_dijkstra(rev_fixed, rev_g, rev_cm);
 
-  ll cnt = 0;
-  cout << cnt << endl;
+  // 行き帰りにかかる時間を除いた滞在時間の最大値を探索
+  ll ans = -1;
+  rep(i, N) {
+    if (fixed[i] != -1 && rev_fixed[i] != -1) {
+      ll t = T - fixed[i] - rev_fixed[i];
+      ans = max(v[i] * t, ans);
+    }
+  }
+
+  cout << ans << endl;
 }
