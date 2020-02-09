@@ -9,13 +9,20 @@ int main() {
   ifstream in("abc154/abc154_a.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  string s, t;
+  cin >> s >> t;
 
-  ll cnt = 0;
+  int a, b;
+  cin >> a >> b;
 
-  cout << cnt << endl;
+  string u;
+  cin >> u;
+
+  if (u == s) {
+    a--;
+  } else {
+    b--;
+  }
+
+  cout << a << ' ' << b << endl;
 }

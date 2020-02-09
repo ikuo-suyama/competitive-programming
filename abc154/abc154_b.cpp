@@ -9,13 +9,8 @@ int main() {
   ifstream in("abc154/abc154_b.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  string s;
+  cin >> s;
 
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  rep(i, s.size()) { cout << 'x'; }
 }

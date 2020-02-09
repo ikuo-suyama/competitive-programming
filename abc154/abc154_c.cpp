@@ -12,10 +12,15 @@ int main() {
   int N;
   cin >> N;
   
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  vector<ll> c(N);
+  set<ll> d;
+  rep(i, N) {
+    ll a;
+    cin >> a;
+    c[i] = a;
+    d.insert(a);
+  }
 
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  string ans = c.size() == d.size() ? "YES" : "NO";
+  cout << ans << endl;
 }
