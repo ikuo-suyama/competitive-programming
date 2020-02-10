@@ -9,13 +9,26 @@ int main() {
   ifstream in("abc154/abc154_d.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  int N, K;
+  cin >> N >> K;
 
-  ll cnt = 0;
+  vector<ll> e(N);
+  rep(i, N) {
+    ll p;
+    cin >> p;
+    e[i] = (1 + p);
+  }
 
-  cout << cnt << endl;
+  ll buf = 0;
+  rep(i, K) { buf += e[i]; }
+
+  ll ans = buf;
+  repi(i, K, N) {
+    buf -= e[i - K];
+    buf += e[i];
+    ans = max(ans, buf);
+  }
+
+  string f = ans % 2 == 0 ? ".0" : ".5";
+  cout << (ans / 2) << f << endl;
 }
