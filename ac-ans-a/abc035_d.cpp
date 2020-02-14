@@ -33,6 +33,8 @@ void search_dijkstra(vector<ll>& fixed, vector<vector<int>>& g, map<P, ll>& m) {
 
 /**
  * Dijkstra / ダイクストラ法
+ * https://nw.tsuda.ac.jp/lec/dijkstra/
+ * http://www.deqnotes.net/acmicpc/dijkstra/
  */
 int main() {
   ifstream in("ac-ans-a/abc035_d.txt");
