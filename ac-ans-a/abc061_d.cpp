@@ -7,36 +7,46 @@ typedef long long ll;
 
 int N, M;
 
-string berman_ford(vector<vector<int>>& g, map<P, ll>& m) {
+string berman_ford(map<P, ll>& m) {
   vector<ll> d(N, __LONG_LONG_MAX__);
-  bool negative = false;
 
   d[0] = 0;
 
-  rep(i, N + 1) {
-    bool updated = false;
+  rep(i, N) {
     for (auto p : m) {
       int j = p.first.first;
       int k = p.first.second;
+      if (d[j] == __LONG_LONG_MAX__) continue;
 
       ll current = d[k];
       ll cost = d[j] + p.second;
 
       if (current > cost) {
         d[k] = cost;
-        updated = true;
       }
     }
+  }
+  ll ans = -d[N - 1];
 
-    if (!updated) {
-      break;
-    }
-    if (i == N) {
-      negative = true;
+  vector<bool> negative(N, false);
+  rep(i, N + 1) {
+    for (auto p : m) {
+      int j = p.first.first;
+      int k = p.first.second;
+      if (d[j] == __LONG_LONG_MAX__) continue;
+
+      ll current = d[k];
+      ll cost = d[j] + p.second;
+
+      if (current > cost) {
+        d[k] = cost;
+        negative[k] = true;
+      }
+      if (negative[j]) negative[k] = true;
     }
   }
 
-  return negative ? "inf" : to_string(-d[N - 1]);
+  return negative[N - 1] ? "inf" : to_string(ans);
 }
 
 /**
@@ -45,6 +55,7 @@ string berman_ford(vector<vector<int>>& g, map<P, ll>& m) {
  * 負のコストがある場合、閉経路がある場合はこちら
  * O(NM)
  * https://qiita.com/wakimiko/items/69b86627bea0e8fe29d5
+ * https://nw.tsuda.ac.jp/lec/BellmanFord/
  */
 int main() {
   ifstream in("ac-ans-a/abc061_d.txt");
@@ -52,7 +63,6 @@ int main() {
 
   cin >> N >> M;
 
-  vector<vector<int>> g(N, vector<int>(0));
   map<P, ll> m;
   rep(i, M) {
     int a, b;
@@ -61,10 +71,9 @@ int main() {
     a--;
     b--;
 
-    g[a].push_back(b);
     m.emplace(make_pair(a, b), -c);
   }
 
-  string ans = berman_ford(g, m);
+  string ans = berman_ford(m);
   cout << ans << endl;
 }
