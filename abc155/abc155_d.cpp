@@ -9,11 +9,28 @@ int main() {
   ifstream in("abc155/abc155_d.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  int N, K;
+  cin >> N >> K;
+
+  vector<ll> p, n;
+  rep(i, N) {
+    ll a;
+    cin >> a;
+    if (a < 0) {
+      n.push_back(a);
+    } else {
+      p.push_back(a);
+    }
+  }
+
+  ll ans = 0;
+  if (K < n.size() * p.size()) {
+  }
+
+  sort()
+  rep(i, N) rep(j, N) {
+
+  }
 
   ll cnt = 0;
 

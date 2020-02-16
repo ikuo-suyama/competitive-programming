@@ -11,11 +11,18 @@ int main() {
 
   int N;
   cin >> N;
-  
+
   vector<int> c(N);
   rep(i, N) { cin >> c[i]; }
 
-  ll cnt = 0;
+  string ret = "APPROVED";
+  rep(i, N) {
+    if (c[i] % 2 == 0) {
+      if (c[i] % 3 != 0 && c[i] % 5 != 0) {
+        ret = "DENIED";
+      }
+    }
+  }
 
-  cout << cnt << endl;
+  cout << ret << endl;
 }

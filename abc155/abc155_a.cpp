@@ -9,13 +9,13 @@ int main() {
   ifstream in("abc155/abc155_a.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  int a, b, c;
+  cin >> a >> b >> c;
 
-  ll cnt = 0;
+  string ret = "No";
+  if ((a == b && b != c) || (a == c && a != b) || (b == c && a != b)) {
+    ret = "Yes";
+  }
 
-  cout << cnt << endl;
+  cout << ret << endl;
 }
