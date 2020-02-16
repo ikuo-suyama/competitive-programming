@@ -12,43 +12,53 @@ struct shirts {
 };
 
 int D, N;
-// [i日][服j]
-int dp[201][201] = {-1};
+vector<int> T;
+vector<shirts> S;
 
-ll solve(int i, int j, int c, vector<int> & T, vector<shirts>& S) {
-  if (i >= N) return 0;
+// [i日][服j]
+int dp[201][201];
+
+ll solve(int i, int j) {
+  if (i == 0) return 0;
 
   if (dp[i][j] != -1) return dp[i][j];
 
   int t = T[i];
   shirts s = S[j];
 
-  int ret = 0;
+  vector<int> c(0);
   if (s.min <= t && t <= s.max) {
-    ret = solve(i + 1, j, T, S);
+    rep(k, N) {
+      shirts s_1 = S[k];
+      c.push_back(solve(i - 1, k) + abs(s_1.c - s.c));
+    }
+    sort(c.begin(), c.end());
   } else {
-    return -1;
+    return 0;
   }
 
-  return dp[i][j] = ret;
+  return dp[i][j] = c[0];
 }
 
 int main() {
   ifstream in("ac-ans-a/joi2013yo_d.txt");
   cin.rdbuf(in.rdbuf());
 
-  cin >> D, N;
-  vector<int> t(D);
-  vector<shirts> s(N);
+  memset(dp, -1, 201 * 201 * sizeof(int));
 
-  rep(i, D) { cin >> t[i]; }
+  cin >> D >> N;
+  T = vector<int>(D);
+  S = vector<shirts>(N);
+
+  rep(i, D) { cin >> T[i]; }
   rep(i, N) {
     int a, b, c;
     cin >> a >> b >> c;
-    s[i] = {a, b, c};
+    S[i] = {a, b, c};
   }
 
   ll cnt = 0;
+  solve(D, 0);
 
   cout << cnt << endl;
 }
