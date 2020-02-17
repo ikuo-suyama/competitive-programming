@@ -13,6 +13,7 @@ int main() {
   cin >> N >> K;
 
   vector<ll> p, n;
+  vector<ll> c(N, 0);
   rep(i, N) {
     ll a;
     cin >> a;
@@ -21,18 +22,13 @@ int main() {
     } else {
       p.push_back(a);
     }
+    c[i] = a;
   }
 
-  ll ans = 0;
-  if (K < n.size() * p.size()) {
-  }
+  vector<ll> ans;
+  rep(i, N) for (int j = i + 1; j < N; j++) { ans.push_back(c[i] * c[j]); }
 
-  sort()
-  rep(i, N) rep(j, N) {
+  sort(ans.begin(), ans.end());
 
-  }
-
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  cout << ans[K -1] << endl;
 }
