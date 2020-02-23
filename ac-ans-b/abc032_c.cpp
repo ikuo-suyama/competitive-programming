@@ -7,6 +7,10 @@ typedef long long ll;
 const int INF = 100100100;
 const int MOD = 1e9 + 7;
 
+
+/**
+ * しゃくとり法
+ */
 int main() {
   ifstream in("ac-ans-b/abc032_c.txt");
   cin.rdbuf(in.rdbuf());
@@ -18,7 +22,7 @@ int main() {
   rep(i, N) {
     int n;
     cin >> n;
-    if(n == 0) {
+    if (n == 0) {
       cout << N << endl;
       return 0;
     } else {
@@ -26,17 +30,19 @@ int main() {
     }
   }
 
-  ll buf = s[0];
+  ll buf = 1;
   int cnt = 0;
-  int l = 0;
-  repi(r, 1, N) {
-    buf = buf * s[r];
-    if (buf <= K) {
+  int r = 0;
+  rep(l, N) {
+    while (r < N && buf * s[r] <= K) {
       cnt = max(r - l + 1, cnt);
+      buf = buf * s[r++];
+    }
+
+    if (l == r) {
+      r++;
     } else {
-      while (buf * s[r] > K && l < r) {
-        buf /= s[l++];
-      }
+      buf /= s[l];
     }
   }
 
