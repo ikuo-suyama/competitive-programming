@@ -31,7 +31,12 @@ ll combMod(int n, int p) {
 }
 
 /**
- * 組み合わせ
+ * 重複組み合わせ
+ * https://mathtrain.jp/tyohukuc
+ * 
+ * n種類のものから重複を許してr個選ぶ
+ * nHr = (n + r - 1)Cr
+ * => r個 + (n-1)個のスロットから(n-1)個の仕切りが入る位置を選ぶ問題(種類rを選ぶか、仕切りn-1を選ぶか)
  */
 int main() {
   ifstream in("abc156/abc156_e.txt");
