@@ -46,16 +46,13 @@ ll factMod(ll n) {
  * nCk≡n! * (k!)^M−2 * ((n−k)!)^M−2 (modM)
  */
 ll combMod(ll n, ll k, const int mod = MOD) {
-  ll n_fact = factMod(n);
-  ll k_fact = factMod(k);
-  ll n_k_fact = factMod(n - k);
+  ll nCk = 1;
+  k = min(k, n - k);
 
-  ll k_powM = powMod(k_fact, mod - 2);
-  ll n_k_powM = powMod(n_k_fact, mod - 2);
-
-  // printf("%lld, %lld, %lld, %lld, %lld\n", n_fact, k_fact, n_k_fact, k_powM, n_k_powM);
-
-  ll nCk = prodMod(prodMod(n_fact, k_powM), n_k_powM);
+  repi(i, 1, k + 1) {
+    nCk = prodMod(nCk, (n - i + 1));
+    nCk = prodMod(nCk, powMod(i, mod - 2));
+  }
   return nCk;
 }
 
