@@ -8,27 +8,27 @@ const int INF = 100100100;
 const int MOD = 1e9 + 7;
 
 int main() {
-  ifstream in("ac-ans-b/arc022_2.txt");
+  ifstream in("ac-ans-b/arc064_a.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  ll N, x;
+  cin >> N >> x;
 
-  vector<int> c(N);
+  vector<ll> c(N);
   rep(i, N) { cin >> c[i]; }
 
-  int l = 0, r = 0;
-  int ans = 1;
-  vector<bool> use(1e5 + 9, false);
-
-  rep(l, N) {
-    while (r < N && !use[c[r]]) {
-      use[c[r]] = true;
-      r++;
+  ll cnt = 0;
+  if (c[0] > x) {
+    cnt = c[0] - x;
+    c[0] = x;
+  }
+  repi(i, 1, N) {
+    if (c[i-1] + c[i] > x) {
+      ll tmp = c[i];
+      c[i] = x - c[i - 1];
+      cnt += tmp - c[i];
     }
-    ans = max(ans, r - l);
-    use[c[l]] = false;
   }
 
-  cout << ans << endl;
+  cout << cnt << endl;
 }

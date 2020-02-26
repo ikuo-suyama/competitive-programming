@@ -8,26 +8,23 @@ const int INF = 100100100;
 const int MOD = 1e9 + 7;
 
 int main() {
-  ifstream in("ac-ans-b/arc022_2.txt");
+  ifstream in("ac-ans-b/arc088_b.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N;
-  cin >> N;
+  string s;
+  cin >> s;
+  int N = s.size();
 
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
-
-  int l = 0, r = 0;
-  int ans = 1;
-  vector<bool> use(1e5 + 9, false);
-
-  rep(l, N) {
-    while (r < N && !use[c[r]]) {
-      use[c[r]] = true;
-      r++;
+  char c = s[0];
+  int ans = INF;
+  repi(i, 1, N) {
+    if (s[i] != c) {
+      ans = min(ans, max(i, N - i));
+      c = s[i];
     }
-    ans = max(ans, r - l);
-    use[c[l]] = false;
+  }
+  if (ans == INF) {
+    ans = N;
   }
 
   cout << ans << endl;
