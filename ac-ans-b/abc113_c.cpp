@@ -11,22 +11,25 @@ int main() {
   ifstream in("ac-ans-b/abc113_c.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N, M;
-  scanf("%d%d", &N, &M);
+	cin.tie(0);
+  ios::sync_with_stdio(false);
 
-  vector<vector<int>> c(N + 1, vector<int>(0));
+  int N , M;
+  cin >> N >> M;
+  
+  vector<vector<int>> c(N);
   vector<int> P(M);
-  vector<ll> Y(M);
+  vector<int> Y(M);
 
   rep(i, M) {
-    scanf("%d%lld", &P[i], &Y[i]);
-    c[P[i]].push_back(Y[i]);
+    cin >> P[i] >> Y[i];
+    c[--P[i]].push_back(Y[i]);
   }
 
   rep(i, N) { sort(c[i].begin(), c[i].end()); }
   rep(i, M) {
     auto _p = c[P[i]];
-    auto ite = lower_bound(_p.begin(), _p.end(), Y[i]);
-    printf("%06d%06ld\n", P[i] + 1, distance(_p.begin(), ite) + 1);
+    auto id = lower_bound(_p.begin(), _p.end(), Y[i]) - _p.begin();
+    printf("%06d%06ld\n", P[i] + 1, id + 1);
   }
 }
