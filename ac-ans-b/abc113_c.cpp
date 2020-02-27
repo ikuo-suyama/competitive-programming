@@ -11,20 +11,16 @@ int main() {
   ifstream in("ac-ans-b/abc113_c.txt");
   cin.rdbuf(in.rdbuf());
 
-  int N , M;
-  cin >> N >> M;
-  
-  vector<vector<int>> c(N, vector<int>(0));
+  int N, M;
+  scanf("%d%d", &N, &M);
+
+  vector<vector<int>> c(N + 1, vector<int>(0));
   vector<int> P(M);
-  vector<int> Y(M);
+  vector<ll> Y(M);
 
   rep(i, M) {
-    int p, y;
-    cin >> p >> y;
-    p--;
-    c[p].push_back(y);
-    P[i] = p;
-    Y[i] = y;
+    scanf("%d%lld", &P[i], &Y[i]);
+    c[P[i]].push_back(Y[i]);
   }
 
   rep(i, N) { sort(c[i].begin(), c[i].end()); }
