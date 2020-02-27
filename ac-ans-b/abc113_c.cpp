@@ -11,7 +11,7 @@ int main() {
   ifstream in("ac-ans-b/abc113_c.txt");
   cin.rdbuf(in.rdbuf());
 
-	cin.tie(0);
+  cin.tie(0);
   ios::sync_with_stdio(false);
 
   int N , M;
@@ -28,8 +28,7 @@ int main() {
 
   rep(i, N) { sort(c[i].begin(), c[i].end()); }
   rep(i, M) {
-    auto _p = c[P[i]];
-    auto id = lower_bound(_p.begin(), _p.end(), Y[i]) - _p.begin();
-    printf("%06d%06ld\n", P[i] + 1, id + 1);
+    ll id = lower_bound(c[P[i]].begin(), c[P[i]].end(), Y[i]) -  c[P[i]].begin();
+    printf("%06d%06lld\n", P[i] + 1, id + 1);
   }
 }
