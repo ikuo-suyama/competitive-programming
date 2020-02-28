@@ -32,6 +32,10 @@ int solve(const int& l, const int& r) {
   return dp[l][r] = cnt;
 }
 
+/**
+ * 区間DP
+ * https://suikaba.hatenablog.com/entry/2017/08/20/150043
+ */
 int main() {
   ifstream in("tipicalDP/tdpc_iwi.txt");
   cin.rdbuf(in.rdbuf());
