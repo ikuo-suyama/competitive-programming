@@ -6,7 +6,7 @@ typedef pair<int, int> P;
 typedef long long ll;
 #ifdef LOCAL
 #define INPUT_FILE                   \
-  ifstream in("abc150/abc150_a.txt"); \
+  ifstream in("abc157/abc157_a.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
@@ -20,8 +20,13 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int X, K;
-  cin >> K >> X;
+  int N;
+  cin >> N;
+  
+  vector<int> c(N);
+  rep(i, N) { cin >> c[i]; }
 
-  cout << ((K * 500 >= X) ? "Yes" : "No") << endl;
+  ll cnt = 0;
+
+  cout << cnt << endl;
 }
