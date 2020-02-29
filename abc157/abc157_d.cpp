@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                   \
-  ifstream in("abc157/abc157_a.txt"); \
+  ifstream in("abc157/abc157_d.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
