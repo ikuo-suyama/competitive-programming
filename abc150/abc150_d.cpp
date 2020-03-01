@@ -3,7 +3,7 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                    \
   ifstream in("abc150/abc150_d.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
@@ -29,17 +29,26 @@ int main() {
   int N;
   ll M;
   cin >> N >> M;
-  
+
   vector<ll> a(N);
-  rep(i, N) { cin >> a[i]; }
+  set<int> checker;
 
-  ll l = 1;
-  rep(i, N) { l = lcm(l, a[i]/2); }
-
-  ll cnt = 0;
-  while (l * (2 * cnt + 1) <= M) {
-    cnt++;
+  rep(i, N) {
+    cin >> a[i];
+    int t = a[i], cnt = 0;
+    while (t % 2 == 0) {
+      t /= 2;
+      cnt++;
+    }
+    checker.insert(cnt);
+  }
+  if (checker.size() != 1) {
+    cout << 0 << endl;
+    return 0;
   }
 
-  cout << cnt << endl;
+  ll l = 1;
+  rep(i, N) { l = lcm(l, a[i] / 2); }
+
+  cout << (M < l ? 0 : (M / l + 1) / 2) << endl;
 }
