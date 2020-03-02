@@ -29,6 +29,16 @@ struct UnionFind {
     return par[x] = root(par[x]);
   }
 
+  vector<int> cnt;
+  void countUp() {
+    cnt = vector<int>(par.size(), 0);
+    for (int i = 0; i < par.size(); i++) {
+      int r = root(i);
+      cnt[r]++;
+    }
+  }
+  int countConnected(int x) { return cnt[root(x)]; }
+
   void unite(int x, int y) {  // xとyの木を併合
     int rx = root(x);         // xの根をrx
     int ry = root(y);         // yの根をry
@@ -68,26 +78,16 @@ int main() {
     cin >> a >> b;
     a--;
     b--;
-    bl[a].push_back(b);
-    bl[b].push_back(a);
-  }
-
-  rep(i, N) {
-    sort(fr[i].begin(), fr[i].end());
-    sort(bl[i].begin(), bl[i].end());
-  }
-
-  vector<int> ans(N, 0);
-  rep(i, N) repi(j, i + 1, N) {
-    bool f = fr[i].size() && *lower_bound(fr[i].begin(), fr[i].end(), j) == j;
-    bool b = bl[i].size() && *lower_bound(bl[i].begin(), bl[i].end(), j) == j;
-    bool c = u.same(i, j);
-    // printf("%d,%d: f%d b%d c%d\n", i, j, f, b, c);
-    if (!f && !b && c) {
-      ans[i]++;
-      ans[j]++;
+    if (u.same(a, b)) {
+      bl[a].push_back(b);
+      bl[b].push_back(a);
     }
   }
 
-  rep(i, N) { cout << ans[i] << ' '; }
+  u.countUp();
+
+  rep(i, N) {
+    int ans = u.countConnected(i) - fr[i].size() - bl[i].size() - 1;
+    cout << ans << ' ';
+  }
 }
