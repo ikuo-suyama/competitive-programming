@@ -23,34 +23,25 @@ int main() {
   int N, K, R, S, P;
   cin >> N >> K >> R >> S >> P;
   map<char, int> points;
-  points.emplace('r', R);
-  points.emplace('s', S);
-  points.emplace('p', P);
+  // 相手の手に対して勝利したときの点
+  points.emplace('s', R);
+  points.emplace('p', S);
+  points.emplace('r', P);
 
   string t;
   cin >> t;
 
-  string a;
   ll ans = 0;
   rep(i, N) {
-    char x = t[i];
-    char y = '';
-    if (x == 'r') {
-      y = 'p';
-    } else if (x == 's') {
-      y = 'r';
-    } else {
-      y = 's';
+    char x, kx = '-';
+    x = t[i];
+    if (i + K < N) {
+      kx = t[i + K];
     }
-
-    if (i >= K && t[i - K]) {
-      char bef = ;
-      
+    if (x != kx) {
+      ans += points.at(x);
     }
-    a;
   }
 
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  cout << ans << endl;
 }
