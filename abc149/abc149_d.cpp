@@ -17,47 +17,53 @@ typedef long long ll;
 const int INF = 100100100;
 const int MOD = 1e9 + 7;
 
-// i回目のじゃんけん、r/s/p
-ll dp[10010][3];
-int N, K;
-
-ll memo(int i, int k) {
-  if (i > N) return 0;
-  if (dp[i][k] != -1) return dp[i][k];
-
-  ll ret = 0;
-  rep(l, 3) { ret = memo(i + 1, l); }
-  return dp[i][k] = ret;
-}
-
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int R, S, P;
+  int N, K, R, S, P;
   cin >> N >> K >> R >> S >> P;
-  map<char, int> win;
-  win.emplace('r', 0);
-  win.emplace('s', 1);
-  win.emplace('p', 2);
 
   map<char, int> points;
-  // 相手の手に対して勝利したときの点
-  points.emplace('s', R);
-  points.emplace('p', S);
-  points.emplace('r', P);
+  // 勝利したときの点
+  points.emplace('r', R);
+  points.emplace('s', S);
+  points.emplace('p', P);
+  map<char, char> win;
+  // 勝てる手
+  win.emplace('s', 'r');
+  win.emplace('p', 's');
+  win.emplace('r', 'p');
 
   string t;
   cin >> t;
 
+  // Group化
+  vector<vector<char>> o(K, vector<char>(0));
+  rep(i, N) { o[i % K].push_back(t[i]); }
+
+  vector<char> org{'r', 's', 'p'};
   ll ans = 0;
-  rep(i, N) {
-    char x, kx = '-';
-    x = t[i];
-    if (i + K < N) {
-      kx = t[i + K];
-    }
-    if (x != kx) {
-      ans += points.at(x);
+  rep(k, K) {
+    // 貪欲法
+    vector<char> i(o[k].size());
+    rep(l, o[k].size()) {
+      if (l == 0) {
+        i[l] = win.at(o[k][l]);
+        ans += points.at(i[l]);
+      } else if (i[l - 1] == win.at(o[k][l])) {
+        if (l < N - 1) {
+          // 同じ手が出せない
+          for (char x : org) {
+            if (x != win.at(o[k][l]) && x != win.at(o[k][l + 1])) {
+              i[l] = x;
+              break;
+            }
+          }
+        }
+      } else {
+        i[l] = win.at(o[k][l]);
+        ans += points.at(i[l]);
+      }
     }
   }
 
