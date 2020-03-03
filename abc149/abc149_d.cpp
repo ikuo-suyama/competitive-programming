@@ -43,15 +43,17 @@ int main() {
 
   vector<char> org{'r', 's', 'p'};
   ll ans = 0;
+
   rep(k, K) {
     // 貪欲法
-    vector<char> i(o[k].size());
-    rep(l, o[k].size()) {
+    int sz = o[k].size();
+    vector<char> i(sz);
+    rep(l, sz) {
       if (l == 0) {
         i[l] = win.at(o[k][l]);
         ans += points.at(i[l]);
       } else if (i[l - 1] == win.at(o[k][l])) {
-        if (l < N - 1) {
+        if (l < sz - 1) {
           // 同じ手が出せない
           for (char x : org) {
             if (x != win.at(o[k][l]) && x != win.at(o[k][l + 1])) {
