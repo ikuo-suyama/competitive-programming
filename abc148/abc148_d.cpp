@@ -27,18 +27,18 @@ int main() {
   rep(i, N) { cin >> c[i]; }
 
   ll cnt = 0;
-  int i = 0;
-  while (i < c.size()) {
-    if (c[i] != i + 1) {
-      c.erase(c.begin() + i);
+  int last = -1;
+  vector<int> a(0);
+  rep(i, N) {
+    if (c[i] != i + 1 - cnt) {
       cnt++;
     } else {
-      i++;
+      last = i;
     }
   }
-  if (c.size() == 0 || c.back() != c.size()) {
-    cnt = -1;
-  }
+
+  // printf("%d, %d", c[last], N - cnt + 1);
+  if (cnt == c.size() || c[last] != N - cnt) cnt = -1;
 
   cout << cnt << endl;
 }
