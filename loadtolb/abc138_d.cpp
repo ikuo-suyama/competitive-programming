@@ -19,15 +19,23 @@ const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 vector<ll> c;
+vector<bool> seen;
 vector<vector<int>> g;
 
-void add(int i, int x) {
-  c[i] += x;
+void dfs(int i) {
+  // すでに訪れたところ -- 逆流防止
+  seen[i] = true;
   for (auto j : g[i]) {
-    add(j, x);
+    if (seen[j] == true) continue;
+    // 自分の子供には必ず、自分に設定された点が加算される(累積)
+    c[j] += c[i];
+    dfs(j);
   }
 }
 
+/**
+ * 一回だけ全探索する DFS
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
@@ -35,21 +43,25 @@ int main() {
   cin >> N >> Q;
 
   c = vector<ll>(N, 0);
+  seen = vector<bool>(N, false);
   g = vector<vector<int>>(N, vector<int>(0));
   rep(i, N - 1) {
-    int f, t;
-    cin >> f >> t;
-    f--;
-    t--;
-    g[f].push_back(t);
+    int a, b;
+    cin >> a >> b;
+    a--;
+    b--;
+    g[a].push_back(b);
+    g[b].push_back(a);
   }
 
   rep(i, Q) {
     int q, x;
     cin >> q >> x;
     q--;
-    add(q, x);
+    c[q] += x;
   }
 
-  rep(i, N) { cout << c[i] << " " << endl; }
+  // rootが1は保証されている
+  dfs(0);
+  rep(i, N) { cout << c[i] << " "; }
 }
