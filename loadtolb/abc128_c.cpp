@@ -42,15 +42,14 @@ int main() {
   rep(i, M) { cin >> p[i]; }
 
   ll ans = 0;
-  rep(i, pow(2, N) + 1) {
-    vector<int> on(N, 0);
+  rep(i, pow(2, N)) {
+    // printf("%d--\n", i);
     int totOn = 0;
-    rep(j, pow(2, N) + 1) { on[j] = i & (1 << j); }
     rep(j, M) {
-      auto sw = c[j];
       int cntOn = 0;
-      for (auto l : sw) {
-        cntOn += on[l];
+      for (auto l : c[j]) {
+        // printf("  l:%d, %d, %d\n", l, (1 << l), i & (1 << l));
+        cntOn += ((i & 1 << l) != 0);
       }
       if (cntOn % 2 == p[j]) totOn++;
     }
