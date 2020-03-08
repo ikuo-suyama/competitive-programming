@@ -18,33 +18,49 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-string S;
-int N;
-int p;
-
-// 開始, 終了
-ll dp[200010][200010];
-ll memo(int s, int e) {
-  // メモしてある値ならそれを返す
-  if (dp[s][e] != -1) {
-    return dp[s][e];
+void insert_or_cntup(map<int, ll>& m, int key) {
+  auto it = m.find(key);
+  if (it != m.end()) {
+    ll cnt = it->second;
+    m.erase(key);
+    m.emplace(key, cnt + 1);
+  } else {
+    m.emplace(key, 1);
   }
-
-  ll ret = 0;
-  repi(i, s, e) {
-    ret += memo(s, i - 1) + memo(i, e);
-  }
-  ll org = stoll(S.substr(s, e));
-  if (org % p == 0) ret++;
-
-  return dp[s][e] = ret;
 }
 
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  memset(dp, -1, (ll)200010 * 200010 * sizeof(ll));
-  cin >> N >> p >> S;
+  ll ans = 0;
+  int N, P;
+  cin >> N >> P;
 
-  cout << memo(0, N) << endl;
+  string S;
+  cin >> S;
+
+  map<int, ll> modP;
+  repi(i, 1, N + 1) {
+    int mod = 0;
+    // 10桁区切りでmodを計算
+    rep(j, i / 10 + 1) {
+      int len = min(10, i - (10 * j));
+      if (len == 0) break;
+      int st = N - (j == 0 ? i : min(10 * j, i));
+      printf("i:%d, j:%d, len:%d, st:%d\n", i, j, len, st);
+      printf("%s\n", S.substr(st, len).c_str());
+      printf("%s\n", S.substr(N-i, i).c_str());
+      ll x = stoll(S.substr(st, len));
+      // ll x = stoll(S.substr(N-i, i));
+      mod += x % P;
+    }
+
+    insert_or_cntup(modP, mod);
+    ans += modP.at(mod);
+    if (mod != 0) ans--;
+  }
+
+  printf("%d, %d, %d, %d\n", 1000 % 7, 123 % 7, 456 % 7, 123456 % 7);
+
+  cout << ans << endl;
 }
