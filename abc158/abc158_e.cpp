@@ -32,35 +32,37 @@ void insert_or_cntup(map<int, ll>& m, int key) {
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  ll ans = 0;
   int N, P;
   cin >> N >> P;
 
   string S;
   cin >> S;
 
+  int dig = 1;
+  int cur = 0;
+  ll ans = 0;
   map<int, ll> modP;
-  repi(i, 1, N + 1) {
-    int mod = 0;
-    // 10桁区切りでmodを計算
-    rep(j, i / 10 + 1) {
-      int len = min(10, i - (10 * j));
-      if (len == 0) break;
-      int st = N - (j == 0 ? i : min(10 * j, i));
-      printf("i:%d, j:%d, len:%d, st:%d\n", i, j, len, st);
-      printf("%s\n", S.substr(st, len).c_str());
-      printf("%s\n", S.substr(N-i, i).c_str());
-      ll x = stoll(S.substr(st, len));
-      // ll x = stoll(S.substr(N-i, i));
-      mod += x % P;
+  rep(i, P) { modP.emplace(i, 0); }
+  modP[0] = 1;
+
+  if (P == 2 || P == 5) {
+    rep(i, N) {
+      if (S[i] % P == 0) {
+        ans += i + 1;
+      }
     }
+  } else {
+    for (int i = N - 1; i >= 0; i--) {
+      int tmp = (S[i] - '0') * dig;
+      cur += tmp;
+      cur %= P;
+      dig *= 10;
+      dig %= P;
 
-    insert_or_cntup(modP, mod);
-    ans += modP.at(mod);
-    if (mod != 0) ans--;
+      int mod = cur % P;
+      ans += modP.at(mod);
+      insert_or_cntup(modP, mod);
+    }
   }
-
-  printf("%d, %d, %d, %d\n", 1000 % 7, 123 % 7, 456 % 7, 123456 % 7);
-
   cout << ans << endl;
 }
