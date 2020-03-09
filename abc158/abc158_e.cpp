@@ -47,7 +47,7 @@ int main() {
 
   if (P == 2 || P == 5) {
     rep(i, N) {
-      if (S[i] % P == 0) {
+      if ((S[i] - '0') % P == 0) {
         ans += i + 1;
       }
     }
