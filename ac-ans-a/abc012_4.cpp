@@ -21,7 +21,7 @@ void warshall_floyd(vector<vector<int>>& d) {
 }
 
 /**
- * Warshall Floyd法
+ * Warshall Floyd/ワーシャルフロイド法
  * 全経路の組み合わせに対して最短となるコストを求める
  * O(N^3)
  */
