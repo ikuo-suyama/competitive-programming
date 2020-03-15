@@ -19,19 +19,24 @@ const ll LINF = 1e18+100;
 const int MOD = 1e9 + 7;
 using R = long double;
 
-ll gcd(ll a, ll b) {
-  if (b == 0) return a;
-  return gcd(b, a % b);
-}
+constexpr R EPS = 1E-14;
+
+// r の(誤差付きの)符号に従って, -1, 0, 1 を返す.
+int sgn(const R& r){ return (r > EPS) - (r < -EPS); }
+// a, b の(誤差付きの)大小比較の結果に従って, -1, 0, 1 を返す.
+int sgn(const R& a, const R &b){ return sgn(a - b); }
 
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
   ll a, b, c;
   cin >> a >> b >> c;
-
-  ll g = gcd(a, b);
-  g = gcd(g, c);
-
-  cout << (sqrt(a/g) + sqrt(b/g) < sqrt(c/g) ? "Yes" : "No") << endl;
+  ll d = c - (a + b);
+  string ans;
+  if (d > 0 && d * d > 4 * a * b) {
+    ans = "Yes";
+  } else {
+    ans = "No";
+  }
+  cout << ans << endl;
 }
