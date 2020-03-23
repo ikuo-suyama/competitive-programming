@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                   \
-  ifstream in("atcoder-problems/arc069_a.txt"); \
+  ifstream in("atcoder-problems/abc049_b.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
@@ -21,16 +21,16 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  ll N, M;
-  cin >> N >> M;
-
-  ll ans;
-  if (2 * N < M) {
-    ans = N + (M - 2 * N) / 4;
-  } else {
-    ans = M / 2;
-    // ans += (N - ans) / 2;
+  int H, W;
+  cin >> H >> W;
+  
+  vector<vector<char>> c(H, vector<char>(W, 0));
+  rep(i, H) {
+    rep(j, W) { cin >> c[i][j]; }
   }
 
-  cout << ans << endl;
+  rep(i, 2 * H) {
+    rep(j, W) { cout << c[i/2][j]; }
+    cout << endl;
+  }
 }
