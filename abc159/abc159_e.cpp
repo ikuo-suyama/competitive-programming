@@ -31,16 +31,22 @@ int main() {
     rep(j, W) { c[i][j] = s[j] - '0'; }
   }
 
-  int cnt = 0;
-  rep(i, pow(2, H - 1)) {
-    int tmp = 0;
+  // rep(i, pow(2, H - 1)) {
+  // }
 
-    rep(j, W) {
-      
+  int ans = 0;
+  int cnt_tot = 0;
+  rep(j, W) {
+    int cnt_line = 0;
+    rep(i, H) { cnt_line += c[i][j]; }
+
+    if (cnt_tot + cnt_line > K) {
+      ans += 1;
+      cnt_tot = cnt_line;
+    } else {
+      cnt_tot += cnt_line;
     }
-
-    cnt = min(cnt, tmp);
   }
 
-  cout << cnt << endl;
+  cout << ans << endl;
 }
