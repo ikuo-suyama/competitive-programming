@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                    \
-  ifstream in("abc145/abc145_b.txt"); \
+  ifstream in("abc145/abc145_c.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
@@ -23,16 +23,31 @@ int main() {
 
   int N;
   cin >> N;
-  string S;
-  cin >> S;
 
-  if (N % 2 != 0) {
-    cout << "No" << endl;
-    return 0;
+  vector<P> c(N);
+  rep(i, N) {
+    int a, b;
+    cin >> a >> b;
+    c[i] = make_pair(a, b);
   }
 
-  string l = S.substr(0, N / 2);
-  string r = S.substr(N / 2, S.size());
+  long np = 1;
+  vector<int> v(N);
+  rep(i, N) {
+    np *= i + 1;
+    v[i] = i;
+  }
 
-  cout << (l == r ? "Yes" : "No") << endl;
+  long double sum = 0;
+  do {
+    rep(i, N - 1) {
+      int x = c[v[i]].first;
+      int y = c[v[i]].second;
+      int xi = c[v[i + 1]].first;
+      int yi = c[v[i + 1]].second;
+      sum += sqrt(pow(x - xi, 2) + pow(y - yi, 2));
+    }
+  } while (next_permutation(v.begin(), v.end()));
+
+  printf("%6Lf", sum / np);
 }
