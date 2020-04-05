@@ -18,25 +18,33 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+int N;
 void dijkstra(int i, vector<vector<int>> &g, vector<vector<int>> &f,
               vector<int> &cnt) {
   priority_queue<P, vector<P>, greater<P>> que;
+  vector<int> fixed(N, -1);
   for (int j : g[i]) {
     que.push(make_pair(1, j));
   }
   while (!que.empty()) {
     P top = que.top();
     que.pop();
-    int nexti = top.second;
-    if (f[i][nexti] != 0) continue;
 
+    int nexti = top.second;
     int currentCost = top.first;
-    f[i][nexti] = 1;
-    f[nexti][i] = 1;
-    // 距離の組み合わせ個数をカウント
-    cnt[currentCost - 1] += 1;
-    printf("i:%d next: %d cst:%d cnt:%d\n", i, nexti, currentCost,
-           cnt[currentCost - 1]);
+
+    if (fixed[nexti] != -1) continue;
+    fixed[nexti] = 1;
+
+    if (f[i][nexti] == 0) {
+      // 距離の組み合わせ個数をカウント
+      f[i][nexti] = 1;
+      f[nexti][i] = 1;
+      cnt[currentCost - 1] += 1;
+    }
+
+    // printf("i:%d next: %d cst:%d cnt:%d\n", i, nexti, currentCost,
+    //        cnt[currentCost - 1]);
     for (int to : g[nexti]) {
       if (i == to) continue;
       que.push(make_pair(currentCost + 1, to));
@@ -48,7 +56,7 @@ void dijkstra(int i, vector<vector<int>> &g, vector<vector<int>> &f,
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, X, Y;
+  int X, Y;
   cin >> N >> X >> Y;
 
   vector<vector<int>> g(N, vector<int>(0));
