@@ -18,25 +18,25 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-// [桁][未満フラグ][last][lunlun]
-ll dp[20][2][10][2];
+// [桁][未満フラグ][nonzeroフラグ][last][lunlun]
+ll dp[20][2][2][10][2];
 
-ll memo(string &S, int i, int smaller, int last, int l) {
-  // printf("i:%d last:%d l:%d\n", i, last, l);
+ll memo(string &S, int i, int smaller, int nonzero, int last, int l) {
   if (i >= S.size()) return l;
-  if (dp[i][smaller][last][l] != -1) return dp[i][smaller][last][l];
+  if (dp[i][smaller][nonzero][last][l] != -1)
+    return dp[i][smaller][nonzero][last][l];
 
   ll ret = 0;
   int current = S[i] - '0';
   int limit = smaller ? 9 : current;
   for (int d = 0; d <= limit; d++) {
     int lun = 1;
-    if (last != 0) lun = abs(d - last) <= 1;
-    // printf("  d:%d lun:%d\n", d, lun);
+    if (nonzero) lun = abs(d - last) <= 1;
 
-    ret += memo(S, i + 1, smaller || d < current, d, l && lun);
+    ret +=
+        memo(S, i + 1, smaller || d < current, nonzero || d > 0, d, l && lun);
   }
-  return dp[i][smaller][last][l] = ret;
+  return dp[i][smaller][nonzero][last][l] = ret;
 }
 
 int main() {
@@ -44,18 +44,14 @@ int main() {
 
   int K;
   cin >> K;
-  memset(dp, -1, 20 * 2 * 10 * 2 * sizeof(ll));
-  string s = "554543231";
-  printf("%lld\n", memo(s, 0, 0, 0, 1));
 
   ll l = 0, r = LINF;
   while (l + 1 < r) {
     ll x = (l + r) / 2;
     string s = to_string(x);
-    memset(dp, -1, 20 * 2 * 10 * 2 * sizeof(ll));
-    ll cnt = memo(s, 0, 0, 0, 1);
-    // 0 のぶんを引いておく
-    cnt--;
+    memset(dp, -1, 20 * 2 * 10 * 2 * 2 * sizeof(ll));
+    ll cnt = memo(s, 0, 0, 0, 0, 1);
+
     if (cnt <= K) {
       l = x;
     } else {
@@ -63,5 +59,5 @@ int main() {
     }
   }
 
-  cout << l << endl;
+  cout << r << endl;
 }
