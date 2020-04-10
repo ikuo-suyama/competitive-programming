@@ -30,31 +30,25 @@ int main() {
   string s;
   cin >> s;
 
-  map<char, int> m;
-  rep(i, s.size()) { m[s[i]] += 1; }
-  int mx = 0, mxi = 0;
-  for (auto kv : m) {
-    if (mx < kv.second) {
-      mx = kv.second;
-      mxi = kv.first;
-    }
-  }
-
   set<char> se(s.begin(), s.end());
-  mxi = 'r';
-  int cnt = 0;
-  while (!isSame(s)) {
-    cnt++;
-    string sd = s.substr(0, s.size() - 1);
-    rep(i, sd.size() - 1) {
-      if (s[i] == mxi || s[i+1] == mxi) {
-        sd[i] = mxi;
-      } else {
-        sd[i] = s[i];
+  int ans = 100;
+  string org = s;
+  for (auto c : se) {
+    int cnt = 0;
+    while (!isSame(s)) {
+      cnt++;
+      string sd = s.substr(0, s.size() - 1);
+      rep(i, sd.size() - 1) {
+        if (s[i] == c || s[i + 1] == c) {
+          sd[i] = c;
+        } else {
+          sd[i] = s[i];
+        }
       }
+      s = sd;
     }
-    s = sd;
-    cout << sd << endl;
+    ans = min(ans, cnt);
+    s = org;
   }
-  cout << cnt << endl;
+  cout << ans << endl;
 }
