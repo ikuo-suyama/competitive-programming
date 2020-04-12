@@ -18,6 +18,12 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+bool isIJK(vector<vector<int>> &c, int target) {
+  int id = lower_bound(c[2].begin(), c[2].end(), target) - c[2].begin();
+  if (id < 0 || id >= c[2].size()) return false;
+  return c[2][id] == target;
+}
+
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
@@ -28,7 +34,7 @@ int main() {
   rep(i, N) {
     char s;
     cin >> s;
-    int t;
+    int t = 0;
     if (s == 'R') {
       t = 0;
     } else if (s == 'G') {
@@ -40,23 +46,21 @@ int main() {
   }
 
   ll ans = c[0].size() * c[1].size() * c[2].size();
+  if (ans == 0) {
+    cout << ans << endl;
+    return 0;
+  }
   for (int i : c[0]) {
     for (int j : c[1]) {
       int diff = abs(i - j);
       int mi = min(i, j);
       int ma = max(i, j);
       if (mi > diff) {
-        int id =
-            lower_bound(c[2].begin(), c[2].end(), mi - diff) - c[2].begin();
-        if (c[2][id] == mi - diff) ans--;
+        if (isIJK(c, mi - diff)) ans--;
       }
-      int id = lower_bound(c[2].begin(), c[2].end(), ma + diff) - c[2].begin();
-      if (c[2][id] == ma + diff) ans--;
-
+      if (isIJK(c, ma + diff)) ans--;
       if (diff % 2 == 0) {
-        int id =
-            lower_bound(c[2].begin(), c[2].end(), ma - diff / 2) - c[2].begin();
-        if (c[2][id] == ma - diff / 2) ans--;
+        if (isIJK(c, ma - diff / 2)) ans--;
       }
     }
   }
