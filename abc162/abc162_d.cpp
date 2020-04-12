@@ -3,7 +3,7 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                    \
   ifstream in("abc162/abc162_d.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
@@ -15,7 +15,7 @@ using namespace std;
 typedef pair<int, int> P;
 typedef long long ll;
 const int INF = 100100100;
-const ll LINF = 1e18+100;
+const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 int main() {
@@ -23,7 +23,7 @@ int main() {
 
   int N;
   cin >> N;
-  
+
   vector<vector<int>> c(3, vector<int>(0));
   rep(i, N) {
     char s;
@@ -39,13 +39,24 @@ int main() {
     c[t].push_back(i);
   }
 
-  ll ans = 0;
+  ll ans = c[0].size() * c[1].size() * c[2].size();
   for (int i : c[0]) {
     for (int j : c[1]) {
-      for (int k : c[2]) {
-        vector<int> c = {i, j, k};
-        sort(c.begin(), c.end(), greater<int>());
-        if (c[0] - c[1] != c[1] - c[2]) ans++;
+      int diff = abs(i - j);
+      int mi = min(i, j);
+      int ma = max(i, j);
+      if (mi > diff) {
+        int id =
+            lower_bound(c[2].begin(), c[2].end(), mi - diff) - c[2].begin();
+        if (c[2][id] == mi - diff) ans--;
+      }
+      int id = lower_bound(c[2].begin(), c[2].end(), ma + diff) - c[2].begin();
+      if (c[2][id] == ma + diff) ans--;
+
+      if (diff % 2 == 0) {
+        int id =
+            lower_bound(c[2].begin(), c[2].end(), ma - diff / 2) - c[2].begin();
+        if (c[2][id] == ma - diff / 2) ans--;
       }
     }
   }
