@@ -26,12 +26,8 @@ int main() {
 
   vector<int> c(S.size(), 1);
   vector<int> n(S.size(), 2);
-  vector<int> b(S.size(), 3);
   ll cnt = 0;
-  while (++cnt < 10000) {
-    // if (equal(c.begin(), c.end(), b.begin())) {
-    //   break;
-    // }
+  while (++cnt <= 10000) {
     n = c;
     rep(i, S.size()) {
       if (S[i] == 'R') {
@@ -41,15 +37,6 @@ int main() {
       }
       n[i] -= c[i];
     }
-
-    // rep(i, S.size()) { cout << n[i] << ' '; }
-    // cout << endl;
-
-    // if (equal(c.begin(), c.end(), n.begin())) {
-    //   break;
-    // } else if (++cnt % 2 == 1) {
-    //   b = c;
-    // }
     c = n;
   }
 
