@@ -23,22 +23,30 @@ int main() {
 
   string S;
   cin >> S;
+  int N = S.size();
+  vector<int> c(N, 0);
 
-  vector<int> c(S.size(), 1);
-  vector<int> n(S.size(), 2);
-  ll cnt = 0;
-  while (++cnt <= 10000) {
-    n = c;
-    rep(i, S.size()) {
-      if (S[i] == 'R') {
-        n[i + 1] += c[i];
-      } else {
-        n[i - 1] += c[i];
-      }
-      n[i] -= c[i];
+  int bnd = 0;
+  int start = 0;
+  int even = 0;
+  int odd = 0;
+  rep(i, N - 1) {
+    i % 2 == 0 ? even++ : odd++;
+    if (S[i] == 'R' && S[i + 1] == 'L') {
+      // 境界
+      bnd = i;
+    } else if (S[i] == 'L' && S[i + 1] == 'R') {
+      c[bnd] = bnd % 2 == 0 ? even : odd;      // Rに R..RL..L Rから偶数
+      c[bnd + 1] = bnd % 2 == 0 ? odd : even;  // Lに Lから偶数
+      start = i;
+      even = 0;
+      odd = 0;
     }
-    c = n;
   }
+
+  (N - 1) % 2 == 0 ? even++ : odd++;
+  c[bnd] = bnd % 2 == 0 ? even : odd;
+  c[bnd + 1] = bnd % 2 == 0 ? odd : even;
 
   rep(i, S.size()) { cout << c[i] << ' '; }
 }
