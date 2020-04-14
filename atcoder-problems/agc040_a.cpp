@@ -24,32 +24,31 @@ int main() {
   string S;
   cin >> S;
 
-  vector<int> c(S.size() + 1, 0);
-  char bef = '-';
-  rep(i, S.size()) {
-    char cur = S[i];
-    if (cur == '<') {
-      if (bef == '>') {
-        c[i + 1] = 1;
-      } else {
-        c[i + 1] = c[i] + 1;
-      }
+  int N = S.size() + 1;
+  vector<int> l(N, 0);
+  vector<int> r(N, 0);
+  for (int i = 1; i < N; i++) {
+    if (S[i - 1] == '<') {
+      l[i] = l[i - 1] + 1;
     } else {
-      if (bef == '<') {
-        c[i + 1] = 0;
-      } else {
-        c[i + 1] = c[i] - 1;
-      }
+      l[i + 1] = 0;
     }
-    bef = S[i];
+  }
+  for (int i = N - 1; i >= 0; i--) {
+    if (S[i] == '>') {
+      r[i] = r[i+1] + 1;
+    } else {
+      r[i] = 0;
+    }
   }
   ll ans = 0;
-  rep(i, c.size()) {
-    ans += abs(c[i]);
-  }
-  rep(i, c.size()) { cout << c[i] << ' '; }
-  cout << endl;
-  rep(i, S.size()) { cout << S[i] << ' '; }
+  rep(i, N) { ans += max(r[i], l[i]); }
+
+  // rep(i, N) { cout << r[i] << ' '; }
+  // cout << endl;
+  // rep(i, N) { cout << l[i] << ' '; }
+  // cout << endl;
+  // rep(i, S.size()) { cout << S[i] << ' '; }
 
   cout << ans << endl;
 }
