@@ -18,33 +18,27 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-/**
- * 繰り返し自乗法
- * http://satanic0258.hatenablog.com/entry/2016/04/29/004730
- */
 ll powMod(ll n, ll p, const int mod = MOD) {
   if (p == 0) return 1;
   if (p % 2 == 0) {
     ll t = powMod(n, p / 2);
-    return t * t % MOD;
+    return t * t % mod;
   } else {
-    return n * powMod(n, p - 1) % MOD;
+    return n * powMod(n, p - 1) % mod;
   }
 }
 
-/**
- * 余剰Combination
+ll fact[200010];
+ll invfact[200010];
+
+/** nCr の O(1)版.
+ * N ~ 10^5 ならこちらのほうが早い
  * nCk≡n! * (k!)^M−2 * ((n−k)!)^M−2 (modM)
  */
-ll combMod(ll n, ll k, const int mod = MOD) {
-  ll nCk = 1;
-  k = min(k, n - k);
-
-  repi(i, 1, k + 1) {
-    nCk = nCk * (n - i + 1) % MOD;
-    nCk = nCk * powMod(i, mod - 2) % MOD;
-  }
-  return nCk;
+ll combMod(int n, int p) { 
+  ll ret = fact[n] * invfact[p] % MOD;
+  ret = ret * invfact[n - p] % MOD;
+  return ret;
 }
 
 int main() {
@@ -52,6 +46,14 @@ int main() {
 
   int N, K;
   cin >> N >> K;
+
+  // 階乗テーブルの初期化
+  fact[0] = 1;
+  invfact[0] = 1;
+  repi(i, 1, N + 2) {
+    fact[i] = fact[i - 1] * i % MOD;
+    invfact[i] = invfact[i - 1] * powMod(i, MOD - 2) % MOD;
+  }
 
   ll ans = 0;
   repi(i, K, N + 1) {
