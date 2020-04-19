@@ -23,11 +23,6 @@ int main() {
 
   int N;
   cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
 
-  ll cnt = 0;
-
-  cout << cnt << endl;
+  printf("%f", N * 2 * 3.14159);
 }
