@@ -18,49 +18,25 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-ll powMod(ll n, ll p, const int mod = MOD) {
-  if (p == 0) return 1;
-  if (p % 2 == 0) {
-    ll t = powMod(n, p / 2);
-    return t * t % mod;
-  } else {
-    return n * powMod(n, p - 1) % mod;
-  }
-}
-
-ll fact[200010];
-ll invfact[200010];
-
-/** nCr の O(1)版.
- * N ~ 10^5 ならこちらのほうが早い
- * nCk≡n! * (k!)^M−2 * ((n−k)!)^M−2 (modM)
- */
-ll combMod(int n, int p) { 
-  ll ret = fact[n] * invfact[p] % MOD;
-  ret = ret * invfact[n - p] % MOD;
-  return ret;
-}
-
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
   int N, K;
   cin >> N >> K;
 
-  // 階乗テーブルの初期化
-  fact[0] = 1;
-  invfact[0] = 1;
-  repi(i, 1, N + 2) {
-    fact[i] = fact[i - 1] * i % MOD;
-    invfact[i] = invfact[i - 1] * powMod(i, MOD - 2) % MOD;
-  }
+  vector<ll> com(N + 1, 0);
+  repi(i, 1, N + 1) { com[i] = com[i - 1] + i; }
 
   ll ans = 0;
-  repi(i, K, N + 1) {
-    ans += combMod(N + 1, i);
+  repi(k, K, N + 2) {
+    ll l = com[k - 1];
+    int ri = N - k >= 0 ? N - k : 0;
+    ll r = com[N] - com[ri];
+
+    ans += (r - l + 1) % MOD;
+    printf("%d %d: %lld %lld %lld\n", N, k, l, r, ans);
     ans %= MOD;
   }
-  if (ans == 0) ans++;
 
   cout << ans << endl;
 }
