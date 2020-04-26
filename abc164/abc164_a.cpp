@@ -21,13 +21,8 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N;
-  cin >> N;
+  int N, M;
+  cin >> N >> M;
   
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
-
-  ll cnt = 0;
-
-  cout << cnt << endl;
+   cout << (N > M ? "safe" : "unsafe") << endl;
 }

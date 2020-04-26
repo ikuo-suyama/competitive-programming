@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                   \
-  ifstream in("abc164/abc164_c.txt"); \
+  ifstream in("abc164/abc164_d.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
@@ -24,12 +24,10 @@ int main() {
   int N;
   cin >> N;
   
-  set<string> c;
-  rep(i, N) {
-    string s;
-    cin >> s;
-    c.insert(s);
-  }
+  vector<int> c(N);
+  rep(i, N) { cin >> c[i]; }
 
-  cout << c.size() << endl;
+  ll cnt = 0;
+
+  cout << cnt << endl;
 }
