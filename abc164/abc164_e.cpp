@@ -24,46 +24,62 @@ ll N, M, S;
 vector<ll> C;
 vector<ll> D;
 
-void search_dijkstra(vector<ll>& fixed, vector<vector<int>>& g, map<P, ll>& a,
-                     map<P, ll>& b) {
-  // 島iに到達時の銀貨
-  vector<ll> sv(N, 0);
-  sv[0] = S;
-  // 未確定なもののQueue; (かかる時間, 島i)
-  priority_queue<pl, vector<pl>, greater<pl>> que;
+// [辺i][所持金S] のときの最短時間
+ll dp[50][2500 + 1];
 
-  que.push(make_pair(0, 0));
+void solve(vector<vector<tl>>& g) {
+  ll MAX = 2500;
+  S = min(S, MAX);
+
+  rep(i, 50) rep(j, 2501) dp[i][j] = LINF;
+  dp[0][S] = 0;
+
+  // 未確定なもののQueue; time, vertex, money
+  priority_queue<tl, vector<tl>, greater<tl>> que;
+  que.push(make_tuple(0, 0, S));
+
   while (!que.empty()) {
-    auto top = que.top();
+    // 構造化束縛 C++17
+    auto [time, from, money] = que.top();
+    // printf("time:%lld from:%lld s:%lld\n", time, from, money);
     que.pop();
-    int from = top.second;
-    if (fixed[from] != -1) continue;
+    if (dp[from][money] < time) continue;
 
-    // 未確定のうち一番小さいものを確定
-    ll now = top.first;
-    fixed[from] = now;
-
-    for (auto to : g[from]) {
-      if (fixed[to] != -1) continue;
-      // TODO: 次の島へのコスト
-      P key = make_pair(from, to);
-      ll time = b.at(key);
-      ll cost = a.at(key);
-
-      if (sv[from] < cost) {
-        ll out = cost - sv[from];
-        ll n = ceil((float)out / C[from]);
-        sv[to] = C[from] * n - out;
-        time += n * D[from];
-      } else {
-        sv[to] = sv[from] - cost;
+    // 換金（補充）
+    if (money + C[from] <= MAX) {
+      ll ntime = time + D[from];
+      ll nmoney = money + C[from];
+      if (dp[from][nmoney] > ntime) {
+        // printf(" >> GET! time:%lld from:%lld s:%lld\n", ntime, from, nmoney);
+        dp[from][nmoney] = ntime;
+        que.push(make_tuple(ntime, from, nmoney));
       }
+    }
 
-      que.push(make_pair(time, to));
+    // 移動
+    for (auto to_edge : g[from]) {
+      auto [to, to_time, to_cost] = to_edge;
+
+      // お金が足りないので通れない
+      if (money < to_cost) continue;
+
+      ll ntime = time + to_time;
+      ll nmoney = money - to_cost;
+
+      // printf("    to:%lld dp:%lld ntime:%lld\n", to, dp[to][nmoney], ntime);
+      if (dp[to][nmoney] > ntime) {
+        // printf(" >> GO! time:%lld to:%lld s:%lld\n", ntime, to, nmoney);
+        dp[to][nmoney] = ntime;
+        que.push(make_tuple(ntime, to, nmoney));
+      }
     }
   }
 
-  return;
+  repi(i, 1, N) {
+    ll ans = LINF;
+    rep(j, MAX + 1) { ans = min(ans, dp[i][j]); }
+    cout << ans << endl;
+  }
 }
 
 /**
@@ -71,7 +87,8 @@ void search_dijkstra(vector<ll>& fixed, vector<vector<int>>& g, map<P, ll>& a,
  * 辺の重みが変わる/補充 DPしながら最短経路
  * 各頂点で所持金がX円である状態を拡充する
  * https://drken1215.hatenablog.com/entry/2020/04/27/190000
- * #graph #dijkstra
+ *
+ * #graph #dijkstra #dp
  */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
@@ -85,18 +102,13 @@ int main() {
     u--;
     v--;
     // v, time, cost
-    g[u].push_back(make_tuple(v, a, b));
-    g[v].push_back(make_tuple(v, a, b));
- }
+    g[u].push_back(make_tuple(v, b, a));
+    g[v].push_back(make_tuple(u, b, a));
+  }
 
   C = vector<ll>(N, 0);
   D = vector<ll>(N, 0);
   rep(i, N) { cin >> C[i] >> D[i]; }
 
-  vector<ll> t(N, -1);
-  search_dijkstra(t, g);
-
-  for(auto i : t) {
-    cout << i << endl;
-  }
+  solve(g);
 }
