@@ -36,32 +36,29 @@ int main() {
     que.push(make_pair(c, b));
   }
 
-  auto top = que.top();
-  que.pop();
-  ll tgt = top.first;
-  ll cnt = top.second;
-
-  auto rit = lower_bound(a.begin(), a.end(), tgt);
-  if (*rit == tgt) rit--;
-  cnt = min(cnt, ll(rit - a.begin()));
   ll ans = 0;
-  // 右側を足し上げ
-  repi(i, rit - a.begin() + 1, N) { ans += a[i]; }
-  ans += tgt * cnt;
-  rit = max(rit - cnt, a.begin());
-
-  while (!que.empty()) {
+  int r = 0;
+  bool ok = true;
+  while (!que.empty() && ok) {
     auto top = que.top();
     que.pop();
     ll tgt = top.first;
     ll cnt = top.second;
 
-    auto lit = upper_bound(a.begin(), rit, tgt);
-    if (lit == rit) break;
-    cnt = min(cnt, ll(lit - a.begin()));
-    ans += tgt * cnt;
-    rit = min(lit - cnt, a.begin());
+    int replace = 0;
+    repi(i, r, r + cnt) {
+      if (a[i] <= tgt) {
+        a[i] = tgt;
+        replace++;
+      } else {
+        ok = false;
+        break;
+      }
+    }
+    r += replace;
   }
+
+  rep(i, N) { ans += a[i]; }
 
   cout << ans << endl;
 }
