@@ -48,19 +48,14 @@ int main() {
   sort(pf.begin(), pf.end(), greater<>());
 
   ll a = 1, b = 1;
-  int cnt = 0;
   for (auto p : pf) {
     ll prime = p.first;
     ll factor = p.second;
-    a *= pow(prime, factor / 2);
-    b *= pow(prime, factor / 2);
-    if (factor % 2 != 0) {
-      if (cnt % 2 != 0) {
-        a *= prime;
-      } else {
+    rep(i, factor) {
+      if (a > b)
         b *= prime;
-      }
-      cnt++;
+      else
+        a *= prime;
     }
   }
   cout << a + b - 2 << endl;
