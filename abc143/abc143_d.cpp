@@ -18,6 +18,10 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+/**
+ * 二分探索 - 汎化
+ * #binarysearch #二分探索
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
@@ -30,11 +34,18 @@ int main() {
 
   ll cnt = 0;
 
-  rep(i, N) repi(j, i + 1, N) {
+  rep(i, N) repi(j, i + 1, N - 1) {
     int diff = c[i] - c[j];
-    repi(l, j + 1, N) {
-      if (c[l] > diff) cnt++;
-    }
+    // この関数が最初にfalseを返す位置のイテレータの位置
+    // true, true, false
+    //             ^
+    auto comp = [&](int x) -> bool {
+      return x > diff;
+    };
+    auto startIt = c.begin() + j + 1;
+    auto it = partition_point(startIt, c.end(), comp);
+    auto l = it - startIt;
+    cnt += l;
   }
 
   cout << cnt << endl;
