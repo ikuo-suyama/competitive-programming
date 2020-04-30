@@ -31,6 +31,7 @@ ll memo(int i, int smaller, int k) {
 
 /**
  * 桁DP
+ * #dp #digitdp
  */
 int main() {
   ifstream in("abc154/abc154_e.txt");

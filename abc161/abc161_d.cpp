@@ -39,6 +39,10 @@ ll memo(string &S, int i, int smaller, int nonzero, int last, int l) {
   return dp[i][smaller][nonzero][last][l] = ret;
 }
 
+/**
+ * 桁DP
+ * #dp #digitdp
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 

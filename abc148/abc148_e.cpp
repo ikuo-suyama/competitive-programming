@@ -43,6 +43,9 @@ ll memo(int i, int smaller, int ok, int k, int x) {
   return dp[i][smaller][ok][k][x] = ret;
 }
 
+/**
+ * MISS!
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
