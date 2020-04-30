@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                    \
-  ifstream in("abc144/abc144_d.txt"); \
+  ifstream in("abc144/abc144_c.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
 #define INPUT_FILE
@@ -18,24 +18,27 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979
-#endif
-#define deg_to_rad(deg) (((deg) / 180) * M_PI)
-#define rad_to_deg(rad) (((rad) / 2 / M_PI) * 360)
-
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  double a, b, x;
-  cin >> a >> b >> x;
-
-  double th = 0;
-  if (b * pow(a, 2) / 2 < x) {
-    th = atan(2 * (b - x / pow(a, 2)) / a);
-  } else {
-    th = atan(pow(b, 2) * a / (2 * x));
+  ll N;
+  cin >> N;
+  int sqn = sqrt(N) + 1;
+  bool ok = false;
+  ll a = 0, b = 0;
+  ll ans = LINF;
+  repi(i, 2, sqn) {
+    b = N / i;
+    if (i * b == N) {
+      a = i;
+      ans = min(ans, a + b - 2);
+      ok = true;
+    }
   }
 
-  printf("%.9lf", rad_to_deg(th));
+  if (!ok) {
+    // 素数
+    ans = N - 1;
+  }
+  cout << ans << endl;
 }
