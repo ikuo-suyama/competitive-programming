@@ -35,29 +35,14 @@ int main() {
   cin >> N >> K;
 
   double ans;
-  int n;
-
-  if (N < K) {
-    n = N;
-    ans = 0;
-    int factor = loga(K, 2);
-    ll sum = 0;
-    repi(i, 1, n + 1) {
-      int f = loga(K / i, 2);
-      sum += pow(2, factor - f);
+  repi(i, 1, N + 1) {
+    ll f = i;
+    double p = 1;
+    while (K > f) {
+      f *= 2;
+      p /= 2;
     }
-    ans += (double)sum / (pow(2, factor) * N);
-
-  } else {
-    n = K - 1;
-    int factor = loga(K, 2);
-    ll sum = 0;
-    repi(i, 1, n + 1) {
-      int f = loga(K / i, 2);
-      sum += pow(2, factor - f);
-    }
-    ans = (double(sum / (pow(2, factor)) + N - K) / N);
+    ans += p;
   }
-
-  printf("%.12lf", ans);
+  printf("%.12lf", ans / N);
 }
