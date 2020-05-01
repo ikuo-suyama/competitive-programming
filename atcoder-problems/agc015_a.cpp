@@ -18,6 +18,14 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+/**
+ * https://atcoder.jp/contests/agc015/tasks/agc015_a
+ * 総和の組み合わせの数
+ * 重複する組み合わせがある場合、組み合わせを数えなくても、
+ * max - min が組み合わせの個数になる。
+ * 
+ * #integer #sum
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
