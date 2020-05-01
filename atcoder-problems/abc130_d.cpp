@@ -19,6 +19,10 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+/**
+ * 尺取法
+ * 「連続する部分」が１つでも良いケース
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
