@@ -22,18 +22,19 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, K;
+  ll N, K;
   cin >> N >> K;
 
   vector<int> c(N);
   rep(i, N) { cin >> c[i]; }
 
   ll ans = 0;
-  ll sum = 0;
+  ll sum = c[0];
   int j = 0;
-  rep(i, N) {
-    while (sum < K && j < N) sum += c[j++];
-    if (sum >= K) ans += N - j + 1;
+  rep(i, N - 1) {
+    // if (i == j) sum += c[++j];
+    while (sum < K && j < N) sum += c[++j];
+    if (sum >= K) ans += N - j;
     sum -= c[i];
   }
 
