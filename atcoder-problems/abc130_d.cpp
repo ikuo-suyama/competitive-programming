@@ -31,8 +31,7 @@ int main() {
   ll ans = 0;
   ll sum = c[0];
   int j = 0;
-  rep(i, N - 1) {
-    // if (i == j) sum += c[++j];
+  rep(i, N) {
     while (sum < K && j < N) sum += c[++j];
     if (sum >= K) ans += N - j;
     sum -= c[i];
