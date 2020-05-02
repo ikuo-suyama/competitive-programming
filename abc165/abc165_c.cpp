@@ -6,8 +6,12 @@ using namespace std;
 #define INPUT_FILE                    \
   ifstream in("abc165/abc165_c.txt"); \
   cin.rdbuf(in.rdbuf());
+#define print_vec(v) \
+  rep(l, v.size()) { cout << v[l] << " "; } \
+  cout << endl;
 #else
 #define INPUT_FILE
+#define print_vec(v)
 #endif
 #define CIN_OPTIMIZE \
   cin.tie(0);        \
@@ -30,6 +34,8 @@ vector<int> d(0);
 void dfs(int i, const int range_start, const int range_end) {
   if (i == N) {
     // 全桁埋めたので判定
+    print_vec(buf);
+
     ll tmpans = 0;
     rep(i, Q) {
       if (buf[b[i]] - buf[a[i]] == c[i]) tmpans += d[i];
@@ -37,6 +43,7 @@ void dfs(int i, const int range_start, const int range_end) {
     ans = max(tmpans, ans);
   } else {
     repi(j, range_start, range_end + 1) {
+      if (i != 0 && buf[i - 1] > j) continue;
       buf[i] = j;
       dfs(i + 1, range_start, range_end);
     }
