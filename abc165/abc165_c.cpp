@@ -19,59 +19,55 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+int N, M, Q;
+ll ans = 0;
+vector<int> buf(0);
+vector<int> a(0);
+vector<int> b(0);
+vector<int> c(0);
+vector<int> d(0);
+
+void dfs(int i, const int range_start, const int range_end) {
+  if (i == N) {
+    // 全桁埋めたので判定
+    ll tmpans = 0;
+    rep(i, Q) {
+      if (buf[b[i]] - buf[a[i]] == c[i]) tmpans += d[i];
+    }
+    ans = max(tmpans, ans);
+  } else {
+    repi(j, range_start, range_end + 1) {
+      buf[i] = j;
+      dfs(i + 1, range_start, range_end);
+    }
+  }
+}
+
+/**
+ * https://www.hamayanhamayan.com/entry/2020/05/02/225726
+ * 重複順列 dfsによる全探索(全列挙)
+ * 必要ない箇所は探索しないことを枝刈りという
+ * #dfs #全探索 #枝刈り
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, M, Q;
   cin >> N >> M >> Q;
 
-  vector<tuple<int, int, int, int>> dabc;
+  buf.resize(N);
+  a.resize(Q);
+  b.resize(Q);
+  c.resize(Q);
+  d.resize(Q);
   rep(i, Q) {
-    int a, b, c, d;
-    cin >> a >> b >> c >> d;
-    a--;
-    b--;
-    dabc.push_back(make_tuple(d, a, b, c));
-  }
-  sort(dabc.begin(), dabc.end(), greater<>());
-
-  ll ans = 0;
-  vector<int> x(N, M);
-  for(auto _t : dabc) {
-    int d = get<0>(_t);
-    int a = get<1>(_t);
-    int b = get<2>(_t);
-    int c = get<3>(_t);
-    int _b = x[b];
-    int _a = _b - c;
-    bool ok = true;
-    for (int j = N - 1; j >= 0; j--) {
-      int p = tmp / pow(M, j);
-      x[j] = p+1;
-      tmp -= p * pow(M, j);
-      if (j < N - 1 && x[j] < x[j + 1]) {
-    rep(i, a + 1) {
-      if (x[i] != M && x[i] > _a) {
-        ok = false;
-        break;
-      } else {
-        x[i] = _a;
-      }
-    }
-    // if (!ok) continue;
-    // reverse(x.begin(), x.end());
-
-    printf("i:%d ", i);
-    rep(l, N) { cout << x[l] << " "; }
-    cout << endl;
-
-    // 判定
-    ll tmpans = 0;
-    rep(i, Q) {
-      if (x[b[i]] - x[a[i]] == c[i]) tmpans += d[i];
-    }
-    ans = max(tmpans, ans);
+    int _a, _b;
+    cin >> _a >> _b >> c[i] >> d[i];
+    _a--;
+    _b--;
+    a[i] = _a;
+    b[i] = _b;
   }
 
+  dfs(0, 1, M);
   cout << ans << endl;
 }
