@@ -45,6 +45,11 @@ int main() {
     int _b = x[b];
     int _a = _b - c;
     bool ok = true;
+    for (int j = N - 1; j >= 0; j--) {
+      int p = tmp / pow(M, j);
+      x[j] = p+1;
+      tmp -= p * pow(M, j);
+      if (j < N - 1 && x[j] < x[j + 1]) {
     rep(i, a + 1) {
       if (x[i] != M && x[i] > _a) {
         ok = false;
@@ -53,7 +58,19 @@ int main() {
         x[i] = _a;
       }
     }
-    if(ok) ans += d;
+    // if (!ok) continue;
+    // reverse(x.begin(), x.end());
+
+    printf("i:%d ", i);
+    rep(l, N) { cout << x[l] << " "; }
+    cout << endl;
+
+    // 判定
+    ll tmpans = 0;
+    rep(i, Q) {
+      if (x[b[i]] - x[a[i]] == c[i]) tmpans += d[i];
+    }
+    ans = max(tmpans, ans);
   }
 
   cout << ans << endl;
