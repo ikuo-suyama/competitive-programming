@@ -42,15 +42,22 @@ int main() {
   rep(i, pow(M, N) + 1) {
     vector<int> x(N, 1);
     int tmp = i;
+    bool ok = true;
     for (int j = N - 1; j >= 0; j--) {
       int p = tmp / pow(M, j);
       x[j] = p;
       tmp -= p * pow(M, j);
+      if (j < N - 1 && x[j] < x[j + 1]) {
+        ok = false;
+        break;
+      }
     }
+    if (!ok) continue;
     reverse(x.begin(), x.end());
-    printf("i:%d ", i);
-    rep(l, N) { cout << x[l] << " "; }
-    cout << endl;
+
+    // printf("i:%d ", i);
+    // rep(l, N) { cout << x[l] << " "; }
+    // cout << endl;
 
     // 判定
     ll tmpans = 0;
