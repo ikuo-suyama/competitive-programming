@@ -22,8 +22,13 @@ typedef pair<ll, ll> pl;
 const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
+ll gcd(ll a, ll b) {
+  if (b == 0) return a;
+  return gcd(b, a % b);
+}
 
 // 素数判定
+// O(Sqrt N)
 bool IsPrime(ll num) {
   if (num < 2)
     return false;
@@ -51,13 +56,11 @@ int main() {
   cin >> a >> b;
 
   ll ans = 1;
-  ll n = min(a, b);
-  ll sqrn = ceil(sqrt(n));
-  repi(i, 2, sqrn + 1) {
-    if (a % i == 0 && b % i == 0 && IsPrime(i)) ans++;
+  ll g = gcd(a, b);
+  for(ll i = 2; i * i <= g; i++) {
+    if (g % i == 0 && IsPrime(i)) ans++;
   }
-  ll m = max(a, b);
-  if (m % n == 0 && IsPrime(n)) ans++;
+  if (IsPrime(g)) ans++;
 
   cout << ans << endl;
 }
