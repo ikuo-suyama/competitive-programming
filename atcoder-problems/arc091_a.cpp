@@ -40,8 +40,8 @@ int main() {
     printf("\n");
   }
 
-  ll h = max(1, N - 2);
-  ll w = max(1, M - 2);
+  ll h = N == 2 ? 0 : max(1, N - 2);
+  ll w = M == 2 ? 0 : max(1, M - 2);
 
   cout << h * w << endl;
 }
