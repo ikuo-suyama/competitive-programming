@@ -26,13 +26,11 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  string S, T;
+  cin >> S >> T;
 
-  ll ans = 0;
+  bool ok = true;
+  rep(i, S.size()) { ok &= S[i] == T[i]; }
 
-  cout << ans << endl;
+  cout << (ok ? "Yes" : "No") << endl;
 }
