@@ -35,11 +35,32 @@ int main() {
     c[i]--;
   }
 
-  vector<int> a(N, 0);
-  a[0] = c[0];
-  repi(i, 1, N) { a[i] = c[a[i - 1]]; }
+  vector<int> a(N, -1);
+  // 街iに何回目に訪れたか
+  vector<int> fin(N, -1);
+
+  a[0] = 0;
+  fin[0] = 0;
+
+  int s = -1, e = -1;
+
+  repi(i, 1, N) {
+    int next = c[a[i - 1]];
+    a[i] = next;
+    if (fin[next] != -1) {
+      // 閉路があった
+      s = fin[next];
+      e = i;
+      break;
+    } else {
+      fin[next] = i;
+    }
+  }
 
   // ループの開始位置で判定
+  printf("%d %d\n", s, e);
+  print_vec(a);
+
   int n = 3 % K - 1;
   ll ans = a[n] + 1;
 
