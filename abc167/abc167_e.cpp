@@ -64,12 +64,14 @@ int main() {
     fact[i] = fact[i - 1] * i % MOD;
     invfact[i] = invfact[i - 1] * powMod(i, MOD - 2) % MOD;
   }
- 
-  ll ans = powMod(M, N);
-  repi(i, K + 1, N) {
-    ll dup = combMod(N - 1, i) * combMod(M + i - 1, i) % MOD;
-    ans -= dup;
-    if (ans < 0) ans += MOD;
+
+  ll ans = 0;
+  rep(i, K + 1) {
+    // 色を選ぶ組み合わせ - 「隣と同じでない」 ... M * (M - 1) * (M - 1) * ...N-1個
+    ll color = M * powMod(M - 1, N - i - 1) % MOD;
+    // くっつける場所
+    ll place = combMod(N - 1, i);
+    ans += color * place % MOD;
     ans %= MOD;
   }
 
