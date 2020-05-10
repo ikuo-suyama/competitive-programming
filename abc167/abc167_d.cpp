@@ -26,7 +26,8 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, K;
+  int N;
+  ll K;
   cin >> N >> K;
 
   vector<int> c(N);
@@ -57,12 +58,24 @@ int main() {
     }
   }
 
+  // printf("%d %d\n", s, e);
+  // print_vec(a);
+
   // ループの開始位置で判定
-  printf("%d %d\n", s, e);
-  print_vec(a);
+  int n = 0;
+  if (s != -1) {
+    if (K <= s) {
+      n = K;
+    } else {
+      ll k = K - s;
+      int lp = e - s;
+      n = (k % lp) + s;
+    }
+  } else {
+    // ループがないケース？
+    n = N % K;
+  }
 
-  int n = 3 % K - 1;
   ll ans = a[n] + 1;
-
   cout << ans << endl;
 }
