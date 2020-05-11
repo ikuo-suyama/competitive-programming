@@ -3,12 +3,12 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                              \
   ifstream in("atcoder-problems/abc057_c.txt"); \
   cin.rdbuf(in.rdbuf());
-#define print_vec(v) \
-rep(l, v.size()) { cout << v[l] << " "; } \
-cout << endl;
+#define print_vec(v)                        \
+  rep(l, v.size()) { cout << v[l] << " "; } \
+  cout << endl;
 #else
 #define INPUT_FILE
 #define print_vec(v)
@@ -20,39 +20,42 @@ typedef pair<int, int> P;
 typedef long long ll;
 typedef pair<ll, ll> pl;
 const int INF = 100100100;
-const ll LINF = 1e18+100;
+const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-// 素因数分解
-vector<pl> prime_factorize(ll N) {
-  vector<pl> res;
-  for (ll a = 2; a * a <= N; ++a) {
-    if (N % a != 0) continue;
-    ll ex = 0;  // 指数
-
-    while (N % a == 0) {
-      ++ex;
-      N /= a;
-    }
-
-    res.push_back({a, ex});
+/**
+ * ceil loga(x)
+ */
+int loga(ll x, ll a) {
+  if (x == 0) return 0;
+  int cnt = 0;
+  while (x != 0) {
+    x /= a;
+    cnt++;
   }
-
-  // 最後に残った数について
-  if (N != 1) res.push_back({N, 1});
-  return res;
+  return cnt;
 }
 
+/**
+ * 約数の数え上げ
+ * N = A * B , B * A であるから、sqrt n まで数えれば十分。
+ * ~ 10 ^ 10 程度でも間に合う
+ * #integer #約数
+ */
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N;
+  ll N;
   cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
 
-  ll ans = 0;
+  ll ans = INF;
+  ll tmp = 1;
+  repi(i, 1, sqrt(N) + 1) {
+    if (N % i != 0) continue;
+    ll res = N / i;
+    ll f = max(loga(tmp, 10), loga(res, 10));
+    ans = min(ans, f);
+  }
 
   cout << ans << endl;
 }
