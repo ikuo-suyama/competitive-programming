@@ -40,20 +40,46 @@ int main() {
     rep(j, s.size() - 1) {
       if (s[j] == 'A' && s[j + 1] == 'B') ans++;
     }
-    if (s[0] == 'B' && s[s.size() - 1] == 'A') both++;
-    else if (s[0] == 'B') sb++;
-    else if (s[s.size() - 1] == 'A') ea++;
-  }
-  ll small = min(ea, sb);
-  ll large = max(ea, sb);
-  ans += small;
-  ll diff = large - small;
-  if (diff > both) {
-    ans += both;
-  } else {
-    ans += diff;
-    ans += (both - diff) / 2;
+    if (s[0] == 'B' && s[s.size() - 1] == 'A')
+      both++;
+    else if (s[0] == 'B')
+      sb++;
+    else if (s[s.size() - 1] == 'A')
+      ea++;
   }
 
+  ll tmp = min(min(ea, sb), both);
+  ans += tmp * 2;
+  ea -= tmp;
+  sb -= tmp;
+  both -= tmp;
+  if (ea != 0) {
+    if (sb != 0) {
+      // K = 0
+      ans += min(ea, sb);
+    } else if (both != 0) {
+      // sb = 0
+      ans += min(ea, both);
+      ans += max((both - ea + 1) / 2, (ll)0);
+    }
+  } else if (sb != 0) {
+    if (ea != 0) {
+      // K = 0
+      ans += min(ea, sb);
+    } else if (both != 0) {
+      ans += min(sb, both);
+      ans += max((both - sb + 1) / 2, (ll)0);
+    }
+  } else if (both != 0) {
+    if (ea != 0) {
+      ans += min(ea, both);
+      ans += max((both - ea + 1) / 2, (ll)0);
+    } else if (sb != 0) {
+      ans += min(sb, both);
+      ans += max((both - sb + 1) / 2, (ll)0);
+    } else {
+      ans += both / 2;
+    }
+  }
   cout << ans << endl;
 }
