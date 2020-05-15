@@ -48,38 +48,13 @@ int main() {
       ea++;
   }
 
-  ll tmp = min(min(ea, sb), both);
-  ans += tmp * 2;
-  ea -= tmp;
-  sb -= tmp;
-  both -= tmp;
-  if (ea != 0) {
-    if (sb != 0) {
-      // K = 0
-      ans += min(ea, sb);
-    } else if (both != 0) {
-      // sb = 0
-      ans += min(ea, both);
-      ans += max((both - ea + 1) / 2, (ll)0);
-    }
-  } else if (sb != 0) {
-    if (ea != 0) {
-      // K = 0
-      ans += min(ea, sb);
-    } else if (both != 0) {
-      ans += min(sb, both);
-      ans += max((both - sb + 1) / 2, (ll)0);
-    }
-  } else if (both != 0) {
-    if (ea != 0) {
-      ans += min(ea, both);
-      ans += max((both - ea + 1) / 2, (ll)0);
-    } else if (sb != 0) {
-      ans += min(sb, both);
-      ans += max((both - sb + 1) / 2, (ll)0);
-    } else {
-      ans += both / 2;
-    }
+  if (both == 0) {
+    ans += min(ea, sb);
+  } else {
+    if (ea + sb > 0)
+      ans += both + min(ea, sb);
+    else
+      ans += both - 1;
   }
   cout << ans << endl;
 }
