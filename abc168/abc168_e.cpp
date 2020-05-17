@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                    \
-  ifstream in("abc168/abc108_e.txt"); \
+  ifstream in("abc168/abc168_e.txt"); \
   cin.rdbuf(in.rdbuf());
 #define print_vec(v)                        \
   rep(l, v.size()) { cout << v[l] << " "; } \
