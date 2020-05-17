@@ -26,13 +26,13 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N;
-  cin >> N;
-  
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  int K;
+  string S;
+  cin >> K >> S;
 
-  ll ans = 0;
-
-  cout << ans << endl;
+  if (S.size() > K) {
+    cout << S.substr(0, K) << "..." << endl;
+  } else {
+    cout << S << endl;
+  }
 }
