@@ -29,7 +29,7 @@ int main() {
   ll K, A, B;
   cin >> K >> A >> B;
 
-  if (K < A || B <= A + 2) {
+  if (K < A + 1 || B <= A + 2) {
     cout << K + 1 << endl;
     return 0;
   }
