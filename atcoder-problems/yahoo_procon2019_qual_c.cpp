@@ -34,30 +34,11 @@ int main() {
     return 0;
   }
 
-  // ll k = K;
-  // ll y = 0;
-  // ll c = 1;
-  // while (k > 0) {
-  //   if (c >= A && k >= 2) {
-  //     c -= A;
-  //     y++;
-  //   } else if (y > 0) {
-  //     y--;
-  //     c += B;
-  //   } else {
-  //     c++;
-  //   }
-  //   k--;
-  //   printf("k:%d y:%d c:%d\n", k, y, c);
-  // }
   ll k = K - (A - 1);
   k--;
   ll cookie = B;
   k--;
 
-  // ll res = k / (A + 2);
-  // cookie += res * B;
-  // cookie += k % (A + 2);
   cookie += (k / 2) * (B - A);
   cookie += k % 2;
 
