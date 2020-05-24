@@ -29,28 +29,16 @@ int main() {
   int K, T;
   cin >> K >> T;
 
-  priority_queue<P, vector<P>, greater<P>> que;
-  rep(i, T) {
-    int a;
-    cin >> a;
-    que.push(make_pair(a, i));
-  }
+  vector<int> c(T, 0);
+  rep(i, T) { cin >> c[i]; }
+  sort(c.begin(), c.end(), greater<int>());
 
-  int ans = 0;
-  int last = -1;
-  while ((que.size() >= 2)) {
-    P top = que.top();
-    que.pop();
-    P next = que.top();
-    que.pop();
-
-    last = last == top.second ? next.second : top.second;
-    if (top.first > 1) que.push(make_pair(top.first - 1, top.second));
-    if (next.first > 1) que.push(make_pair(next.first - 1, next.second));
-  }
-  if (!que.empty()) {
-    P top = que.top();
-    ans = last == top.second ? top.first : top.first - 1;
+  ll ans = 0;
+  if (T == 1) {
+    cout << c[0] - 1 << endl;
+    return 0;
+  } else {
+    ans = max(2 * c[0] - K - 1, 0);
   }
 
   cout << ans << endl;
