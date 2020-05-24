@@ -3,7 +3,7 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                                                      \
+#define INPUT_FILE                                               \
   ifstream in("atcoder-problems/codefestival_2016_qualC_b.txt"); \
   cin.rdbuf(in.rdbuf());
 #define print_vec(v)                        \
@@ -29,15 +29,28 @@ int main() {
   int K, T;
   cin >> K >> T;
 
-  vector<int> a(T);
-  rep(i, T) { cin >> a[i]; }
-  sort(a.begin(), a.end(), greater<int>());
+  priority_queue<P, vector<P>, greater<P>> que;
+  rep(i, T) {
+    int a;
+    cin >> a;
+    que.push(make_pair(a, i));
+  }
 
-  ll ans = 0;
-  if (T > 1) {
-    ans = max(a[0] - a[1] - 1, 0);
-  } else {
-    ans = a[0] - 1;
+  int ans = 0;
+  int last = -1;
+  while ((que.size() >= 2)) {
+    P top = que.top();
+    que.pop();
+    P next = que.top();
+    que.pop();
+
+    last = last == top.second ? next.second : top.second;
+    if (top.first > 1) que.push(make_pair(top.first - 1, top.second));
+    if (next.first > 1) que.push(make_pair(next.first - 1, next.second));
+  }
+  if (!que.empty()) {
+    P top = que.top();
+    ans = last == top.second ? top.first : top.first - 1;
   }
 
   cout << ans << endl;
