@@ -4,7 +4,7 @@ using namespace std;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                              \
-  ifstream in("atcoder-problems/arc101_a.txt"); \
+  ifstream in("atcoder-problems/agc011_b.txt"); \
   cin.rdbuf(in.rdbuf());
 #define print_vec(v)                        \
   rep(l, v.size()) { cout << v[l] << " "; } \
@@ -26,18 +26,30 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, K;
-  cin >> N >> K;
+  int N;
+  cin >> N;
 
-  vector<ll> c(N, 0);
+  vector<int> c(N);
   rep(i, N) { cin >> c[i]; }
+  sort(c.begin(), c.end());
+  vector<ll> sum(N);
 
-  ll ans = LINF;
-  rep(i, N - K + 1) {
-    int l = i;
-    int r = i + K - 1;
-    ll time = min(abs(c[l]) + abs(c[l] - c[r]), abs(c[r]) + abs(c[l] - c[r]));
-    ans = min(ans, time);
+  sum[0] = c[0];
+  repi(i, 1, N) { sum[i] = sum[i - 1] + c[i]; }
+
+  ll ans = 0;
+  rep(i, N) {
+    int a = c[i] * 2;
+    int j = lower_bound(c.begin(), c.end(), a) - c.begin();
+    if (c.size() <= j) {
+      ans++;
+      continue;
+    }
+    if (c[j] > a) j--;
+    ll tot = sum[j];
+    if (tot > c[c.size() - 1]) {
+      ans++;
+    }
   }
 
   cout << ans << endl;
