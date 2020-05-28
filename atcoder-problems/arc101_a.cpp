@@ -25,7 +25,7 @@ const int MOD = 1e9 + 7;
 
 int N, K;
 ll solve(vector<ll> &c) {
-  vector<int> d(N, 0);
+  vector<int> d(N - 1, 0);
   rep(i, N - 1) {
     if (c[i] < 0 && c[i + 1] < 0) {
       d[i] = (abs(c[i]) - abs(c[i + 1])) * 2;
@@ -39,7 +39,7 @@ ll solve(vector<ll> &c) {
   ll ans = LINF;
   ll sum = 0;
 
-  rep(i, N) {
+  rep(i, N - 1) {
     if (i < K) {
       sum += d[i];
       ans = sum;
@@ -58,12 +58,21 @@ int main() {
   cin >> N >> K;
 
   vector<ll> c(N, 0);
-  rep(i, N) { cin >> c[i]; }
+  bool zero = false;
+  rep(i, N) {
+    cin >> c[i];
+    if (c[i] == 0) zero = true;
+  }
   if (N == 1) {
-    cout << c[0] << endl;
+    cout << abs(c[0]) << endl;
     return 0;
   }
 
+  if (!zero) {
+    c.push_back(0);
+    N++;
+  }
+  sort(c.begin(), c.end());
   ll ans = solve(c);
 
   rep(i, N) { c[i] *= -1; }
