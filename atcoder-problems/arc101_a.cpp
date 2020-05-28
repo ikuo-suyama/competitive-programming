@@ -27,9 +27,7 @@ int N, K;
 ll solve(vector<ll> &c) {
   vector<int> d(N - 1, 0);
   rep(i, N - 1) {
-    if (c[i] < 0 && c[i + 1] < 0) {
-      d[i] = (abs(c[i]) - abs(c[i + 1])) * 2;
-    } else if (c[i] < 0) {
+    if (c[i] < 0) {
       d[i] = abs(c[i]) * 2 + c[i + 1];
     } else {
       d[i] = c[i + 1] - c[i];
@@ -39,14 +37,18 @@ ll solve(vector<ll> &c) {
   ll ans = LINF;
   ll sum = 0;
 
+  bool zero = false;
   rep(i, N - 1) {
+    if (c[i] == 0 || c[i + 1] == 0) zero = true;
+    if (i >= K && c[i - K] == 0) zero = false;
+
     if (i < K) {
       sum += d[i];
-      ans = sum;
+      if (zero) ans = sum;
     } else {
       sum -= d[i - K];
       sum += d[i];
-      ans = min(ans, sum);
+      if (zero) ans = min(ans, sum);
     }
   }
   return ans;
