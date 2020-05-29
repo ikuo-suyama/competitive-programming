@@ -23,16 +23,33 @@ const int INF = 100100100;
 const ll LINF = 1e18+100;
 const int MOD = 1e9 + 7;
 
+ll solve(vector<int> &c) {
+  vector<int> d(c.begin(), c.end());
+  ll ret = 0;
+  rep(i, c.size() - 1) {
+    if (d[i] == d[i + 1]) {
+      d[i + 1] = !d[i];
+      ret++;
+    }
+  }
+  return ret;
+}
+
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N;
-  cin >> N;
+  string S;
+  cin >> S;
+  int N = S.size();
   
   vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  rep(i, N) {
+    c[i] = S[i] - '0';
+  }
 
-  ll ans = 0;
+  ll ans = solve(c);
+  c[0] = !c[0];
+  ans = min(ans, solve(c) + 1);
 
   cout << ans << endl;
 }
