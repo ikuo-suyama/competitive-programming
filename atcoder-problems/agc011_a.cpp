@@ -34,37 +34,19 @@ int main() {
   sort(c.begin(), c.end());
 
   ll ans = 0;
-  int cur = 0;
+  int cur = 1;
   int waitIdx = 0;
   int waitNum = 1;
   ll time = c[0] + K;
   while (cur < N) {
-    if (waitNum >= C) {
-      if (c[cur] > time) {
-        // 乗れない
-        waitIdx = cur;
-        time = c[cur] + K;
-        waitNum = 1;
-        ans++;
-        cur++;
-      } else {
-        // 乗れる
-        cur++;
-        waitIdx = cur;
-        time = c[waitIdx] + K;
-        waitNum = 0;
-        ans++;
-      }
-    } else if (c[cur] > time) {
+    if (waitNum > C || c[cur] > time) {
       waitIdx = cur;
       time = c[waitIdx] + K;
-      waitNum = 1;
+      waitNum = 0;
       ans++;
-      cur++;
-    } else {
-      cur++;
-      waitNum++;
     }
+    cur++;
+    waitNum++;
   }
   if (waitNum > 0) ans++;
 
