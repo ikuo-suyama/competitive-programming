@@ -33,22 +33,14 @@ int main() {
   rep(i, N) { cin >> c[i]; }
   sort(c.begin(), c.end());
 
+  int waiting = 0;
   ll ans = 0;
-  int cur = 1;
-  int waitIdx = 0;
-  int waitNum = 1;
-  ll time = c[0] + K;
-  while (cur < N) {
-    if (waitNum > C || c[cur] > time) {
-      waitIdx = cur;
-      time = c[waitIdx] + K;
-      waitNum = 0;
+  rep(i, N) {
+    if(i - waiting >= C || c[i] - c[waiting] > K) {
       ans++;
+      waiting = i;
     }
-    cur++;
-    waitNum++;
   }
-  if (waitNum > 0) ans++;
-
+  ans++;
   cout << ans << endl;
 }
