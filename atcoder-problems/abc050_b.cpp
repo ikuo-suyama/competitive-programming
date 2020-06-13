@@ -3,7 +3,7 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                              \
   ifstream in("atcoder-problems/abc050_b.txt"); \
   cin.rdbuf(in.rdbuf());
 #else
@@ -15,7 +15,7 @@ using namespace std;
 typedef pair<int, int> P;
 typedef long long ll;
 const int INF = 100100100;
-const ll LINF = 1e18+100;
+const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 int main() {
@@ -23,17 +23,28 @@ int main() {
 
   int N;
   cin >> N;
-  
+
   vector<int> c(N);
   rep(i, N) { cin >> c[i]; }
 
+  ll sum = 0;
+  rep(i, N) { sum += c[i]; }
+
   int M;
   cin >> M;
-  
-  vector<int> p(M);
-  rep(i, N) { cin >> p[i]; }
 
-  ll cnt = 0;
+  vector<P> p(M);
+  rep(i, M) {
+    int x, t;
+    cin >> x >> t;
+    x--;
+    p[i] = make_pair(x, t);
+  }
 
-  cout << cnt << endl;
+  rep(i, M) {
+    ll tmp = sum;
+    tmp -= c[p[i].first];
+    tmp += p[i].second;
+    cout << tmp << endl;
+  }
 }
