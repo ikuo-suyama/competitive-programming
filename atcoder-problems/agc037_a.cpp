@@ -32,7 +32,7 @@ int main() {
   ll ans = 1;
   bool pass = false;
   repi(i, 1, S.size()) {
-    printf("%c %c %d\n", S[i], S[i - 1], pass);
+    // printf("%d: %c %c %d %d\n", i, S[i - 1], S[i], pass, ans);
     if (S[i] == S[i - 1] && !pass) {
       pass = true;
       i++;
@@ -42,6 +42,7 @@ int main() {
       ans++;
     }
   }
+  if (pass) ans--;
 
   cout << ans << endl;
 }
