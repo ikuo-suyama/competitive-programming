@@ -29,20 +29,22 @@ int main() {
   string S;
   cin >> S;
 
-  ll ans = 1;
-  bool pass = false;
-  repi(i, 1, S.size()) {
-    // printf("%d: %c %c %d %d\n", i, S[i - 1], S[i], pass, ans);
-    if (S[i] == S[i - 1] && !pass) {
-      pass = true;
-      i++;
-      ans++;
+  int N = S.size();
+
+  vector<int> g(N);
+  set<char> s = {S[0], S[1], S[2]};
+
+  g[0] = 1;
+  g[1] = S[0] == S[1] ? 1 : 2;
+  g[2] = S[1] == S[2] ? 2 : g[1] + 1;
+
+  repi(i, 3, N) {
+    if (S[i] != S[i - 1]) {
+      g[i] = g[i - 1] + 1;
     } else {
-      pass = false;
-      ans++;
+      g[i] = g[i - 3] + 2;
     }
   }
-  if (pass) ans--;
 
-  cout << ans << endl;
+  cout << g[N - 1] << endl;
 }
