@@ -36,7 +36,7 @@ int main() {
   string S;
   cin >> S;
 
-  repi(i, A, N - 1) {
+  repi(i, A, D - 1) {
     if (S[i] == '#' && S[i + 1] == '#') {
       cout << "No";
       return 0;
@@ -44,7 +44,7 @@ int main() {
   }
 
   if (C > D) {
-    repi(i, A, C - 2) {
+    repi(i, B - 1, D) {
       if (S[i] == '.' && S[i + 1] == '.' && S[i + 2] == '.') {
         cout << "Yes" << endl;
         return 0;
