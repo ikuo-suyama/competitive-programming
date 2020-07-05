@@ -29,13 +29,9 @@ int main() {
   int N;
   cin >> N;
 
-  ll ans = 0;
-  rep(i, N) {
-    if (i * 1000 >= N) {
-      ans = i * 1000 - N;
-      break;
-    }
-  }
+  int cnt = (N / 1000);
+  ll ans = (cnt + 1) * 1000 - N;
+  if (ans == 1000) ans = 0;
 
   cout << ans << endl;
 }

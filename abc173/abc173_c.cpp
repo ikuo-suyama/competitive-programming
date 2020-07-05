@@ -46,15 +46,22 @@ int main() {
 
     // 列の塗りつぶし
     rep(j, pow(2, W)) {
+      vector<vector<char>> tmptmp(tmp);
       rep(l, W) {
         if (j & (1 << l)) {
-          rep(k, H) { tmp[k][l] = ' '; }
+          rep(k, H) { tmptmp[k][l] = ' '; }
         }
       }
+
+      // 数え上げ
+      int cnt = 0;
+      rep(j, H) rep(k, W) {
+        if (tmptmp[j][k] == '#') {
+          cnt++;
+        }
+      }
+      if (cnt == K) ans++;
     }
-
-    // 数え上げ
   }
-
   cout << ans << endl;
 }
