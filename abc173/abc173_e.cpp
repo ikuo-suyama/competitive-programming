@@ -30,36 +30,39 @@ const int MOD = 1e9 + 7;
 const int mod = 1000000007;
 // const int mod = 998244353;
 struct mint {
-  ll x; // typedef long long ll;
-  mint(ll x=0):x((x%mod+mod)%mod){}
-  mint operator-() const { return mint(-x);}
+  ll x;  // typedef long long ll;
+  mint(ll x = 0) : x((x % mod + mod) % mod) {}
+  mint operator-() const { return mint(-x); }
   mint& operator+=(const mint a) {
     if ((x += a.x) >= mod) x -= mod;
     return *this;
   }
   mint& operator-=(const mint a) {
-    if ((x += mod-a.x) >= mod) x -= mod;
+    if ((x += mod - a.x) >= mod) x -= mod;
     return *this;
   }
-  mint& operator*=(const mint a) { (x *= a.x) %= mod; return *this;}
-  mint operator+(const mint a) const { return mint(*this) += a;}
-  mint operator-(const mint a) const { return mint(*this) -= a;}
-  mint operator*(const mint a) const { return mint(*this) *= a;}
+  mint& operator*=(const mint a) {
+    (x *= a.x) %= mod;
+    return *this;
+  }
+  mint operator+(const mint a) const { return mint(*this) += a; }
+  mint operator-(const mint a) const { return mint(*this) -= a; }
+  mint operator*(const mint a) const { return mint(*this) *= a; }
   mint pow(ll t) const {
     if (!t) return 1;
-    mint a = pow(t>>1);
+    mint a = pow(t >> 1);
     a *= a;
-    if (t&1) a *= *this;
+    if (t & 1) a *= *this;
     return a;
   }
 
   // for prime mod
-  mint inv() const { return pow(mod-2);}
-  mint& operator/=(const mint a) { return *this *= a.inv();}
-  mint operator/(const mint a) const { return mint(*this) /= a;}
+  mint inv() const { return pow(mod - 2); }
+  mint& operator/=(const mint a) { return *this *= a.inv(); }
+  mint operator/(const mint a) const { return mint(*this) /= a; }
 };
-istream& operator>>(istream& is, mint& a) { return is >> a.x;}
-ostream& operator<<(ostream& os, const mint& a) { return os << a.x;}
+istream& operator>>(istream& is, mint& a) { return is >> a.x; }
+ostream& operator<<(ostream& os, const mint& a) { return os << a.x; }
 
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
@@ -69,75 +72,63 @@ int main() {
 
   vector<ll> p(0);
   vector<ll> m(0);
-  int zeroCnt = 0;
+  vector<ll> c(0);
   rep(i, N) {
     ll d;
     cin >> d;
-    if (d > 0) {
+    if (d >= 0) {
       p.push_back(d);
     } else if (d < 0) {
-      m.push_back(-1 * d);
-    } else {
-      zeroCnt++;
+      m.push_back(d);
     }
+    c.push_back(d);
   }
 
   mint ans = 1;
-  if (p.size() == 0 && K % 2 == 1) {
-    // マイナスにしかできない
-    if (zeroCnt > 0) {
-      ans = 0;
+  bool ok = true;
+  int P = p.size();
+  int M = m.size();
+  if (P > 0) {
+    if (N == K) {
+      ok = M % 2 == 0;
     } else {
-      sort(m.begin(), m.end());
-      rep(i, K) {
-        ans *= -m[i];
-      }
+      ok = true;
     }
-  } else if (p.size() + m.size() < K) {
-    // かならず０を含む
-    ans = 0;
-  } else if (p.size() >= K) {
-      rep(i, K) {
-        ans *= p[i];
-      }
   } else {
-    bool minus = false;
-    // プラスにできる
-    int pi = 0;
-    int mi = 0;
-    rep(i, K) {
-      if (p[pi] > m[mi]) {
-        pi++;
-      } else {
-        mi++;
-      }
+    ok = K % 2 == 0;
+  }
+
+  if (!ok) {
+    sort(c.begin(), c.end(), [](ll x, ll y) { return abs(x) < abs(y); });
+    rep(i, K) { ans *= c[i]; }
+  } else {
+    sort(p.begin(), p.end());
+    sort(m.rbegin(), m.rend());
+    if(K % 2 == 1) {
+      // 奇数のときは、予め正の数を１つとっておく
+      ans *= p.back();
+      p.pop_back();
     }
-    if (mi % 2 == 1) {
-      // マイナスになるのでプラスに戻す
-      if (p.size() == pi && m.size() == mi) {
-        // 数が足りない
-        if (zeroCnt > 0) {
-          cout << 0 << endl;
-          return 0;
-        }
-        // そのまま(N = Kのケース, マイナス)
-        minus = true;
-      }
-      if (mi + 1 < m.size() && m[mi + 1] > p[pi]) {
-        mi++;
-        pi--;
-      } else {
-        pi++;
-        mi--;
-      }
+
+    // ペアを作る
+    vector<ll> pair(0);
+    while(p.size() >= 2) {
+      ll x = p.back();
+      p.pop_back();
+      x *= p.back();
+      p.pop_back();
+      pair.push_back(x);
     }
-    rep(i, pi) {
-      ans *= p[i];
+    while(m.size() >= 2) {
+      ll x = m.back();
+      m.pop_back();
+      x *= m.back();
+      m.pop_back();
+      pair.push_back(x);
     }
-    rep(i, mi) {
-      ans *= m[i];
-    }
-    if (minus) ans *= -1;
+
+    sort(pair.rbegin(), pair.rend());
+    rep(i, K/2) { ans *= pair[i]; }
   }
 
   cout << ans << endl;
