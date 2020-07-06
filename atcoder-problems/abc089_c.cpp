@@ -63,7 +63,7 @@ int main() {
   int N;
   cin >> N;
 
-  map<char, int> m;
+  map<char, ll> m;
   rep(i, N) {
     string s;
     cin >> s;
@@ -75,9 +75,7 @@ int main() {
   rep(i, a.size() - 2) {
     repi(j, i + 1, a.size() - 1) {
       repi(k, j + 1, a.size()) {
-        if (m[a[i]] && m[a[j]] && m[a[k]]) {
-          ans += m[a[i]] * m[a[j]] * m[a[k]];
-        }
+        ans += m[a[i]] * m[a[j]] * m[a[k]];
       }
     }
   }
