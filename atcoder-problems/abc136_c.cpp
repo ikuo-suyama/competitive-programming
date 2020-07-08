@@ -42,7 +42,7 @@ int main() {
   int min = c[0] - 1;
   rep(i, N - 1) {
     if (c[i] > c[i + 1]) {
-      if (c[i + 1] < min) {
+      if (c[i] - c[i + 1] > 1 || c[i + 1] < min) {
         ok = false;
         break;
       } else {
