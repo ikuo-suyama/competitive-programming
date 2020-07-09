@@ -3,12 +3,12 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                              \
   ifstream in("atcoder-problems/agc019_a.txt"); \
   cin.rdbuf(in.rdbuf());
-#define print_vec(v) \
-rep(l, v.size()) { cout << v[l] << " "; } \
-cout << endl;
+#define print_vec(v)                        \
+  rep(l, v.size()) { cout << v[l] << " "; } \
+  cout << endl;
 #else
 #define INPUT_FILE
 #define print_vec(v)
@@ -20,7 +20,7 @@ typedef pair<int, int> P;
 typedef long long ll;
 typedef pair<ll, ll> pl;
 const int INF = 100100100;
-const ll LINF = 1e18+100;
+const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 int main() {
@@ -31,20 +31,22 @@ int main() {
   cin >> Q >> H >> S >> D;
   cin >> N;
 
-  double Ql = Q * 4;
-  double Hl = H * 2;
-  double Sl = S;
-  double Dl = D / 2;
-  vector<pair<ll, double>> c = {{Ql, 0.25}, {Hl, 0.5}, {Sl, 1}, {Dl, 2}};
+  ll Ql = Q * 8;
+  ll Hl = H * 4;
+  ll Sl = S * 2;
+  ll Dl = D;
+  vector<pair<ll, ll>> c = {{Ql, 8}, {Hl, 4}, {Sl, 2}, {Dl, 1}};
   sort(c.begin(), c.end());
 
   ll rest = N;
   ll ans = 0;
-  for (auto p : c) {
-    ll n = rest / p.second;
-    if (n > 0) {
-      ans += n * p.first * p.second;
-      rest -= n * p.second;
+  while (rest != 0) {
+    for (auto p : c) {
+      ll n = rest * p.second / 2;
+      if (n > 0) {
+        ans += n * (p.first / p.second);
+        rest -= n * 2 / p.second;
+      }
     }
   }
 
