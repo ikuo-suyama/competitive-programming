@@ -33,42 +33,43 @@ int main() {
   rep(i, N) { cin >> a[i]; }
   rep(i, M) { cin >> b[i]; }
 
-  int ai = 0, bi = 0;
-  int ans = 0;
-  ll res = K;
+  ll A = 0;
+  ll ai = -1;
   rep(i, N) {
-    if (res - a[i] < 0) {
-      ai = i - 1;
-      break;
+    if (A + a[i] <= K) {
+      A += a[i];
     } else {
-      res -= a[i];
-      ans++;
+      break;
     }
-  }
-  if (res > 0) {
-    rep(i, M) {
-      if (res - b[i] < 0) {
-        bi = i - 1;
-        break;
-      } else {
-        res -= b[i];
-        ans++;
-      }
-    }
+    ai = i;
   }
 
-  int j = bi;
-  for (int i = ai; i >= 0; i--) {
-    res += a[i];
-    for (int l = j; l < M; l++) {
-      if (res - b[l] < 0) {
-        j = l - 1;
-        break;
-      } else {
-        res -= b[l];
-      }
+  int bj = -1;
+  ll B = 0;
+  ll k = K - A;
+  rep(j, M) {
+    if (B + b[j] <= k) {
+      B += b[j];
+    } else {
+      break;
     }
-    ans = max(ans, i + j + 1);
+    bj = j;
   }
+  int ans = ai + bj + 2;
+
+  for (int i = ai; i >= 0; i--) {
+    A -= a[i];
+    ll k = K - A;
+    repi(j, bj + 1, M) {
+      if (B + b[j] <= k) {
+        B += b[j];
+      } else {
+        break;
+      }
+      bj = j;
+    }
+    ans = max(i + bj + 1, ans);
+  }
+
   cout << ans << endl;
 }
