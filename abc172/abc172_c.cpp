@@ -33,27 +33,42 @@ int main() {
   rep(i, N) { cin >> a[i]; }
   rep(i, M) { cin >> b[i]; }
 
-  int i = 0, j = 0;
+  int ai = 0, bi = 0;
+  int ans = 0;
   ll res = K;
-  ll ans = 0;
-  while (res > 0) {
-    if (a[i] < b[j] && i < N) {
-      res -= a[i];
-      i++;
-    } else if (a[i] >= b[j] && j < M) {
-      res -= b[j];
-      j++;
-    } else if (i < N && j >= M) {
-      res -= a[i];
-      i++;
-    } else if (i >= N && j < M) {
-      res -= b[j];
-      j++;
-    } else {
+  rep(i, N) {
+    if (res - a[i] < 0) {
+      ai = i - 1;
       break;
+    } else {
+      res -= a[i];
+      ans++;
     }
-    if (res >= 0) ans++;
+  }
+  if (res > 0) {
+    rep(i, M) {
+      if (res - b[i] < 0) {
+        bi = i - 1;
+        break;
+      } else {
+        res -= b[i];
+        ans++;
+      }
+    }
   }
 
+  int j = bi;
+  for (int i = ai; i >= 0; i--) {
+    res += a[i];
+    for (int l = j; l < M; l++) {
+      if (res - b[l] < 0) {
+        j = l - 1;
+        break;
+      } else {
+        res -= b[l];
+      }
+    }
+    ans = max(ans, i + j + 1);
+  }
   cout << ans << endl;
 }
