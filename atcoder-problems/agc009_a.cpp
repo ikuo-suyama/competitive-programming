@@ -29,10 +29,20 @@ int main() {
   int N;
   cin >> N;
   
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  vector<ll> a(N, 0);
+  vector<ll> b(N, 0);
+  rep(i, N) {
+    cin >> a[i] >> b[i];
+  }
+  reverse(a.begin(), a.end());
+  reverse(b.begin(), b.end());
 
   ll ans = 0;
+  rep(i, N) {
+    if ((a[i] + ans) % b[i] != 0) {
+      ans += b[i] - ((a[i] + ans) % b[i]);
+    }
+  }
 
   cout << ans << endl;
 }
