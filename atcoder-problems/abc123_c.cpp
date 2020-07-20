@@ -26,26 +26,9 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  ll N;
-  cin >> N;
+  ll N, A, B, C, D, E;
+  cin >> N >> A >> B >> C >> D >> E;
 
-  ll minI = 0;
-  ll minN = LINF;
-  rep(i, 5) {
-    int c;
-    cin >> c;
-    if (c <= minN) {
-      minI = i;
-      minN = c;
-    }
-  }
-
-  ll ans;
-  if (N <= minN) {
-    ans = 5;
-  } else {
-    ans = 4 + (N % minN == 0 ? N / minN : N / minN + 1);
-  }
-
+  ll ans = 4 + ceil((double)N / min(A, min(B, min(C, min(D, E)))));
   cout << ans << endl;
 }
