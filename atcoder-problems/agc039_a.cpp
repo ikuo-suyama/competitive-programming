@@ -23,6 +23,23 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
+int cnt(string s) {
+  ll tmp = 0;
+  ll sum = 0;
+  char c = s[0];
+  rep(i, s.size()) {
+    if (c == s[i])
+      tmp++;
+    else {
+      if (tmp > 1) sum += tmp / 2;
+      tmp = 1;
+      c = s[i];
+    }
+  }
+  if (tmp > 1) sum += tmp / 2;
+  return sum;
+}
+
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
@@ -31,32 +48,15 @@ int main() {
   cin >> S >> K;
   int N = S.size();
 
-  ll tmp = 0;
-  char c = S[0];
-  for (int i = N - 1; i >= 0; i--) {
-    if (c == S[i])
-      tmp++;
-    else
-      break;
-  }
-  if (tmp == N) {
-    cout << ceil(((double)N / 2)) * K << endl;
+  ll ans = 0;
+  if (K == 1) {
+    ans = cnt(S);
+    cout << ans << endl;
     return 0;
   }
 
-  ll ans = 0;
-  rep(i, N) {
-    if (c == S[i])
-      tmp++;
-    else {
-      c = S[i];
-      if (tmp > 1) {
-        ans += ceil((double)tmp / 2);
-      }
-      tmp = 0;
-    }
-  }
-  if (tmp && S[N - 1] != S[0]) ans += ceil((double)tmp / 2);
+  ll cntx2 = cnt(S + S);
+  ll cntx1 = cntx2 - cnt(S);
 
-  cout << ans * K << endl;
+  cout << cntx2 * (K / 2) + cntx1 * (K % 2) << endl;
 }
