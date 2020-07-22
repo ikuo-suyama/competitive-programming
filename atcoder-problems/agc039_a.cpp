@@ -47,16 +47,37 @@ int main() {
   ll K;
   cin >> S >> K;
   int N = S.size();
+  set<char> c;
+  rep(i, N) c.insert(S[i]);
 
   ll ans = 0;
+  ans = cnt(S);
   if (K == 1) {
-    ans = cnt(S);
     cout << ans << endl;
+    return 0;
+  } else if (c.size() == 1) {
+    cout << S.size() * K / 2 << endl;
     return 0;
   }
 
-  ll cntx2 = cnt(S + S);
-  ll cntx1 = cntx2 - cnt(S);
+  ans *= K;
+  if (S[0] == S[N - 1]) {
+    int a = 0;
+    rep(i, N) {
+      if (S[0] == S[i])
+        a++;
+      else
+        break;
+    }
+    int b = 0;
+    for (int i = N - 1; i >= 0; i--) {
+      if (S[0] == S[i])
+        b++;
+      else
+        break;
+    }
+    ans -= ((a / 2) + (b / 2) - (a + b) / 2) * (K - 1);
+  }
 
-  cout << cntx2 * (K / 2) + cntx1 * (K % 2) << endl;
+  cout << ans << endl;
 }
