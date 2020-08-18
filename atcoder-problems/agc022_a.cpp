@@ -28,28 +28,32 @@ int main() {
 
   string S;
   cin >> S;
-  string abc = "abcdefghijklmnopqrstuvwxyz";
-  if (S.size() != abc.size()) {
-    map<char, int> m;
-    rep(i, S.size()) { m[S[i]]++; }
-    rep(i, abc.size()) {
-      if (!m[abc[i]]) {
-        cout << S << abc[i] << endl;
+
+  int N = S.size();
+  vector<int> c(26, 0);
+  rep(i, N) { c[S[i] - 'a']++; }
+
+  if (N < 26) {
+    rep(i, 26) {
+      if (!c[i]) {
+        cout << S << char('a' + i) << endl;
         return 0;
       }
     }
-  } else {
-    char last = S.back();
-    reverse(S.begin(), S.end());
-    rep(i, S.size() - 1) {
-      if (S[i] > S[i + 1]) {
-        reverse(S.begin(), S.end());
-        rep(j, S.size() - i - 2) { cout << S[j]; }
-        cout << last;
-        return 0;
-      }
-    }
-    cout << -1 << endl;
-    return 0;
   }
+  for (int i = N - 1; i >= 1; i--) {
+    // printf("%c %c %d\n", S[i - 1], S[i], S[i - 1] < S[i]);
+    c[S[i] - 'a']--;
+    if (S[i - 1] < S[i]) {
+      rep(j, 26) {
+        char t = ('a' + j);
+        if (!c[j] && t > S[i - 1]) {
+          cout << S.substr(0, i - 1) << char(t) << endl;
+          return 0;
+        }
+      }
+    }
+  }
+  cout << -1 << endl;
+  return 0;
 }
