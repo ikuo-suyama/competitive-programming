@@ -26,7 +26,7 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, K;
+  ll N, K;
   cin >> N >> K;
 
   vector<pl> c(N);
@@ -37,13 +37,12 @@ int main() {
   }
   sort(c.begin(), c.end());
 
-  ll tot = 0;
   for (auto p : c) {
-    tot += p.second;
-    if (tot >= K) {
+    if (p.second >= K) {
       cout << p.first << endl;
       return 0;
     }
+    K -= p.second;
   }
 
   return 0;
