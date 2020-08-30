@@ -23,18 +23,17 @@ const int INF = 100100100;
 const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
-int memo(vector<int>& dp, int i, vector<int>& c) {
-  if (dp[i]) return dp[i];
+int memo(vector<ll>& dp, int i, vector<ll>& c) {
   if (i == 0) return 1;
   if (i < 0) return 0;
+  if (dp[i] != -1) return dp[i];
 
   if (!c[i]) {
     dp[i] = memo(dp, i - 1, c) + memo(dp, i - 2, c);
   } else {
-    dp[i] = memo(dp, i - 1, c);
+    dp[i] = 0;
   }
-
-  return dp[i];
+  return dp[i] %= MOD;
 }
 
 int main() {
@@ -43,14 +42,15 @@ int main() {
   int N, M;
   cin >> N >> M;
 
-  vector<int> c(N + 1);
+  vector<ll> c(N + 1, 0);
   rep(i, M) {
-    int j;
+    ll j;
     cin >> j;
     c[j]++;
   }
 
-  vector<int> dp(N + 1, 0);
+  vector<ll> dp(N + 1, -1);
 
-  cout << memo(dp, N, c) << endl;
+  ll ans = memo(dp, N, c);
+  cout << ans << endl;
 }
