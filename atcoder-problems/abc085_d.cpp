@@ -26,34 +26,30 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N, H;
+  ll N, H;
   cin >> N >> H;
 
-  vector<int> a(N, 0);
-  vector<int> b(N, 0);
-  rep(i, N) { cin >> a[i] >> b[i]; }
-
-  priority_queue<P> bque;
-  bque.push({b[0], 0});
-  int maxIdx = 0;
-  repi(i, 1, N) {
-    if (a[i] > a[maxIdx] || (a[i] == a[maxIdx] && b[i] < b[maxIdx])) maxIdx = i;
-
-    bque.push({b[i], i});
+  vector<ll> a(N, 0);
+  vector<ll> b(N, 0);
+  ll amax = 0;
+  rep(i, N) {
+    cin >> a[i] >> b[i];
+    if (amax < a[i]) amax = a[i];
   }
+  sort(a.rbegin(), a.rend());
+  sort(b.rbegin(), b.rend());
 
   ll ans = 0;
-  while (bque.size() != 0) {
-    P kv = bque.top();
-    bque.pop();
-    if (kv.second != maxIdx && bque.size() != 0) {
-      H -= kv.first;
-      ans++;
-    } else {
-      ll tmp = ceil((float)max(H - kv.first, 0) / a[maxIdx]);
-      ans += tmp + 1;
+  rep(i, N) {
+    if (amax > b[i]) break;
+    H -= b[i];
+    ans++;
+    if (H <= 0) {
+      cout << ans << endl;
+      return 0;
     }
-    if (H <= 0) break;
   }
+
+  ans += ceil((double)H / a[0]);
   cout << ans << endl;
 }
