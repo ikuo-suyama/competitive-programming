@@ -29,17 +29,13 @@ int main() {
   ll S;
   cin >> S;
 
-  ll x, y;
-  for (ll i = sqrt(sqrt(S)); i >= 1; i--) {
-    ll tmp = S - pow(i, 2);
-    if (pow(sqrt(tmp), 2) == tmp) {
-      x = i;
-      y = sqrt(tmp);
-      break;
-    }
+  ll x = 1e9, y = 1;
+  ll y2 = S / x + 1;
+  ll x2 = x - S % x;
+  if (S == 1e18) {
+    y2 = 1e9;
+    x2 = 0;
   }
-
-  ll x2 = -y, y2 = x;
   printf("0 0 %lld %lld %lld %lld", x, y, x2, y2);
   return 0;
 }
