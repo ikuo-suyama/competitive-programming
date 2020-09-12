@@ -24,21 +24,22 @@ const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 int H, W;
-int solve(vector<vector<char>> &c, P s, P g) {
+int solve(vector<vector<char>> &c, P s) {
   priority_queue<pair<int, P>, vector<pair<int, P>>, greater<pair<int, P>>> que;
   que.push({0, s});
 
   vector<vector<int>> m(H, vector<int>(W, -1));
+  int _max = -1;
   while (que.size()) {
     auto val = que.top();
     que.pop();
 
     int cnt = val.first;
-    if (val.second == g) return cnt;
 
     int i = val.second.first;
     int j = val.second.second;
     if (m[i][j] != -1) continue;
+    _max = max(_max, cnt);
 
     m[i][j] = cnt;
     if (i - 1 >= 0 && c[i - 1][j] == '.') que.push({cnt + 1, {i - 1, j}});
@@ -46,7 +47,7 @@ int solve(vector<vector<char>> &c, P s, P g) {
     if (j - 1 >= 0 && c[i][j - 1] == '.') que.push({cnt + 1, {i, j - 1}});
     if (j + 1 < W && c[i][j + 1] == '.') que.push({cnt + 1, {i, j + 1}});
   }
-  return -1;
+  return _max;
 }
 
 int main() {
@@ -60,13 +61,10 @@ int main() {
   int ans = 0;
 
   rep(i, H) rep(j, W) {
-    repi(k, i, H) rep(l, W) {
-      if (i >= k && j >= l) continue;
-      if (c[i][j] == '#' || c[k][l] == '#') continue;
-      int tmp = solve(c, {i, j}, {k, l});
-      // printf("%d %d %d %d/ cnt:%d\n", i, j, k, l, tmp);
-      ans = max(ans, tmp);
-    }
+    if (c[i][j] == '#') continue;
+    int tmp = solve(c, {i, j});
+    // printf("%d %d/ cnt:%d\n", i, j, tmp);
+    ans = max(ans, tmp);
   }
 
   cout << ans << endl;
