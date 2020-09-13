@@ -30,20 +30,19 @@ int main() {
   string S;
   cin >> N >> S;
 
-  ll ans = 0;
-  bool on = false;
+  ll wsum = 0;
   rep(i, N) {
-    if (S[i] == '#') on = true;
-    if (S[i] == '.' && on) ans++;
+    if (S[i] == '.') wsum++;
+  }
+  ll ans = wsum;
+
+  ll bsum = 0;
+  rep(i, N) {
+    if (S[i] == '#') bsum++;
+    else
+      wsum--;
+    ans = min(ans, wsum + bsum);
   }
 
-  ll ansr = 0;
-  on = false;
-  reverse(S.begin(), S.end());
-  rep(i, N) {
-    if (S[i] == '.') on = true;
-    if (S[i] == '#' && on) ansr++;
-  }
-
-  cout << min(ans, ansr) << endl;
+  cout << ans << endl;
 }
