@@ -28,11 +28,24 @@ int main() {
 
   string S;
   cin >> S;
-  
-  vector<char> c(N);
-  rep(i, N) {}
+
+  int N = S.size();
+  vector<char> c;
+  rep(i, N) {
+    if (S[i] != 'x') c.push_back(S[i]);
+  }
+
+  rep(i, c.size() / 2) {
+    if (c[i] != c[c.size() - 1 - i]) {
+      cout << -1 << endl;
+      return 0;
+    }
+  }
 
   ll ans = 0;
+  rep(i, N) {
+    
+  }
 
   cout << ans << endl;
 }
