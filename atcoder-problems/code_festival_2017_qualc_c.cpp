@@ -30,24 +30,23 @@ int main() {
   cin >> S;
 
   int N = S.size();
-  vector<char> c;
-  rep(i, N) {
-    if (S[i] != 'x') c.push_back(S[i]);
-  }
-
-  rep(i, c.size() / 2) {
-    if (c[i] != c[c.size() - 1 - i]) {
+  int l = 0, r = N - 1;
+  int ans = 0;
+  while (l < r) {
+    if (S[l] == S[r]) {
+      l++;
+      r--;
+    } else if (S[l] == 'x') {
+      l++;
+      ans++;
+    } else if (S[r] == 'x') {
+      r--;
+      ans++;
+    } else {
       cout << -1 << endl;
       return 0;
     }
   }
-
-  ll ans = 0;
-  int center = 0;
-  rep(i, ceil((double)c.size() / 2)) {
-    while (S[center] != c[i]) center++;
-  }
-
 
   cout << ans << endl;
 }
