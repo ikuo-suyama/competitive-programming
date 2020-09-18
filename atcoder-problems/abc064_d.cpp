@@ -30,28 +30,17 @@ int main() {
   string S;
   cin >> N >> S;
 
-  int l = 0, r = 0;
-  int tl = 0, tr = 0;
+  int tr = 0, tl = 0;
+  int d = 0, x = 0;
   rep(i, N) {
-    if (S[i] == '(') {
-      if (i > 0 && S[i - 1] == ')') {
-        tl += l;
-        l = 1;
-        tr += r;
-        r = 0;
-      } else if (r > 0)
-        r--;
-      else
-        l++;
-    } else {
-      if (l > 0) l--;
-      else
-        r++;
-    }
+    if (S[i] == '(') d++;
+    else
+      d--;
+    x = min(d, x);
   }
-  tr += r;
-  tl += l;
 
+  tr = -x;
+  tl = d - x;
   rep(i, tr) { cout << '('; }
   cout << S;
   rep(i, tl) { cout << ')'; }
