@@ -70,26 +70,24 @@ int main() {
   int N, K;
   cin >> N >> K;
 
-  vector<int> c;
+  vector<P> c(K);
   rep(i, K) {
     int l, r;
     cin >> l >> r;
-    repi(i, l, r + 1) { c.push_back(i); }
+    c[i] = {l, r + 1};
   }
-  sort(c.begin(), c.end());
 
   mint ans = 0;
-  vector<mint> memo(N + 1, 0);
-  memo[N] = 1;
-  int M = c.size();
-  for (int i = N - 1; i > 0; i--) {
-    mint ret = 0;
-    rep(j, M) {
-      if (c[j] > N - i) break;
-      ret += memo[i + c[j]];
+  vector<mint> dp(N + 1, 0);
+  dp[0] = 1;
+  dp[1] = -1;
+  rep(i, N) {
+    if (i > 0) dp[i] += dp[i - 1];
+    rep(j, K) {
+      auto [l, r] = c[j];
+      if (i + l < N) dp[i + l] += dp[i];
+      if (i + r < N) dp[i + r] -= dp[i];
     }
-    memo[i] = ret;
   }
-
-  cout << memo[1] << endl;
+  cout << dp[N - 1] << endl;
 }
