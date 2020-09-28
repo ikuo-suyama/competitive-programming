@@ -29,20 +29,10 @@ int main() {
   ll N;
   cin >> N;
 
-  // ll tmp = 0;
-  // repi(j, 1, N + 1) {
-  //   if (N / j == N % j) {
-  //     printf("  %d,", j);
-  //     tmp+=j;
-  //   }
-  // }
-  // cout << tmp << endl << endl;
-
   ll ans = 0;
   ll i = 1;
   while ((N - i) / i > i) {
     if ((N - i) % i == 0) {
-      // printf("  %lld,", (N - i) / i);
       ans += (N - i) / i;
     }
     i++;
