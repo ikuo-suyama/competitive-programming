@@ -87,7 +87,8 @@
     "valarray": "cpp",
     "vector": "cpp",
     "__cxx_version": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "dsu": "cpp"
   },
   "C_Cpp.errorSquiggles": "Enabled"
 }
