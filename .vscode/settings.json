@@ -88,7 +88,8 @@
     "vector": "cpp",
     "__cxx_version": "cpp",
     "filesystem": "cpp",
-    "dsu": "cpp"
+    "dsu": "cpp",
+    "segtree": "cpp"
   },
   "C_Cpp.errorSquiggles": "Enabled"
 }
