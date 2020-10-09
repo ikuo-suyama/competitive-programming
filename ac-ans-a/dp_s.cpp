@@ -39,6 +39,10 @@ ll memo(int i, int smaller, int modD) {
   return dp[i][smaller][modD] = ret;
 }
 
+/**
+ * 桁DP
+ * #dp #digitdp
+ */
 int main() {
   ifstream in("ac-ans-a/dp_s.txt");
   cin.rdbuf(in.rdbuf());
