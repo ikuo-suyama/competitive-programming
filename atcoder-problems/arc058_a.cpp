@@ -5,12 +5,12 @@ using namespace atcoder;
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
-#define INPUT_FILE                   \
+#define INPUT_FILE                              \
   ifstream in("atcoder-problems/arc058_a.txt"); \
   cin.rdbuf(in.rdbuf());
-#define print_vec(v) \
-rep(l, v.size()) { cout << v[l] << " "; } \
-cout << endl;
+#define print_vec(v)                        \
+  rep(l, v.size()) { cout << v[l] << " "; } \
+  cout << endl;
 #else
 #define INPUT_FILE
 #define print_vec(v)
@@ -22,30 +22,38 @@ typedef pair<int, int> P;
 typedef long long ll;
 typedef pair<ll, ll> pl;
 const int INF = 100100100;
-const ll LINF = 1e18+100;
+const ll LINF = 1e18 + 100;
 const int MOD = 1e9 + 7;
 
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  string N;
+  int N;
   int K;
   cin >> N >> K;
 
-  set<int> d;
+  unordered_set<int> d;
   rep(i, K) {
     int _d;
     cin >> _d;
     d.insert(_d);
   }
 
-  rep(i, N.size()) {
-    if (d.count(N[i])) {
-      
+  int ans = 0;
+  repi(i, N, 100000) {
+    string s = to_string(i);
+    bool ok = true;
+    rep(j, s.size()) {
+      if (d.count(s[j] - '0')) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok){
+      ans = i;
+      break;
     }
   }
-
-  ll ans = 0;
 
   cout << ans << endl;
 }
