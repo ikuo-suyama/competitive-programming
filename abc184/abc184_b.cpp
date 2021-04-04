@@ -6,7 +6,7 @@ using namespace atcoder;
 #define repi(i, s, n) for (int i = (s); i < (n); i++)
 #ifdef LOCAL
 #define INPUT_FILE                   \
-  ifstream in("abc184/abc184_a.txt"); \
+  ifstream in("abc184/abc184_b.txt"); \
   cin.rdbuf(in.rdbuf());
 #define print_vec(v) \
 rep(l, v.size()) { cout << v[l] << " "; } \
@@ -28,12 +28,20 @@ const int MOD = 1e9 + 7;
 int main() {
   INPUT_FILE CIN_OPTIMIZE;
 
-  int N = 4;
+  int N, X;
+  cin >> N >> X;
   
-  vector<int> c(N);
-  rep(i, N) { cin >> c[i]; }
+  string s;
+  cin >> s;
 
-  ll ans = c[0] * c[3] - c[1] * c[2];
+  ll ans = X;
+  rep(i, N) {
+    if (s[i] == 'o') {
+      ans += 1;
+    } else if (ans > 0) {
+      ans--;
+    }
+  }
 
   cout << ans << endl;
 }
